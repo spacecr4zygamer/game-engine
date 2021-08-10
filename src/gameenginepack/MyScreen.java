@@ -80,7 +80,7 @@ public class MyScreen extends Screen {
 						Class<?> myClass = null;
 						Object InstanceOfClass = null;
 						try {
-							myClass = Class.forName(Name);
+							myClass = Class.forName("gameenginepack."+Name);
 							Constructor<?> constructor = myClass.getConstructor();
 							InstanceOfClass = constructor.newInstance();
 						} catch (Exception a) {
@@ -215,7 +215,7 @@ public class MyScreen extends Screen {
 
 		//ReadFile("WorldData/World.xml");
 		//System.out.println(123456789 & 0);
-		System.out.println(checkPasscode(56));
+		//System.out.println(checkPasscode(56));
 		//Verändern sie die File Location falls nötig
 		//_Instances.add(new BasePart(new Vector2(500, 20)));
 		// E = (BasePart) _Instances.get(0);

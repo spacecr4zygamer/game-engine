@@ -57,7 +57,7 @@ public class Vector2 {
 	}
 	
 	public String tostring() {
-		return "[x="+this.x+",y="+this.y+"]";
+		return this.x+","+this.y;
 	}
 	
 	public Vector2 unit() {
@@ -91,7 +91,7 @@ public class Vector2 {
 		String x = ree[0];
 		String y = ree[1];
 		//System.out.println(x+"|"+y);
-		Vector2 r = new Vector2(new Double(x),new Double(y));
+		Vector2 r = new Vector2(Double.parseDouble(x),Double.parseDouble(y));
 		//this.set(new Double(x),new Double(y));
 		//System.out.println(r.tostring());
 		return r;

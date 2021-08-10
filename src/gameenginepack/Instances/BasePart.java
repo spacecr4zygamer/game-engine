@@ -1,4 +1,6 @@
-package gameenginepack;
+package gameenginepack.Instances;
+
+import gameenginepack.Vector2;
 
 public abstract class BasePart extends Instance {
 
@@ -28,39 +30,35 @@ public abstract class BasePart extends Instance {
 	//public abstract BasePart Touched();
 
 	@Override
-	public void setPropertyChild(String PropertyName, String Property) {
+	public void setProperty(String PropertyName, String Property) {
 		// TODO Auto-generated method stub
 		switch(PropertyName) {
-		case "Position":
-			this.Position = Vector2.fromString(Property);
-		break;
-		case "Size":
-			this.Size = Vector2.fromString(Property);
-		break;
-		case "Velocity":
-			this.Velocity = Vector2.fromString(Property);
+			case "Position":
+				this.Position = Vector2.fromString(Property);
+				break;
+			case "Size":
+				this.Size = Vector2.fromString(Property);
+				break;
+			case "Velocity":
+				this.Velocity = Vector2.fromString(Property);
 
-		break;
-		case "BrickColor":
-			this.BrickColor = Property;
-		break;
-		case "CanCollide":
-			boolean state = false;
-			if (Property.toLowerCase()=="true") {
-				state = true;
-			}
-			this.CanCollide = state; 
-		break;
-		case "Rotation":
-			this.Rotation = Double.parseDouble(Property);
-		break;
-		
-		default:
-			setPropertyChildChild(PropertyName,Property);	
+				break;
+			case "BrickColor":
+				this.BrickColor = Property;
+				break;
+			case "CanCollide":
+				boolean state = false;
+				if (Property.toLowerCase() == "true") {
+					state = true;
+				}
+				this.CanCollide = state;
+				break;
+			case "Rotation":
+				this.Rotation = Double.parseDouble(Property);
+				break;
 		}
+		super.setProperty(PropertyName,Property);
 	}
-	
-	public abstract void setPropertyChildChild(String PropertyName, String Property);
 
 	/*@Override
 	public void setvar(String var, Object value) {

@@ -1,17 +1,12 @@
-package gameenginepack;
+package gameenginepack.Instances;
 
 public abstract class Instance {
 	
 	public Instance Parent;
 	
 
-	public abstract void setPropertyChild(String PropertyName, String Property);
 	public void setProperty(String PropertyName, String Property) {
-		switch(PropertyName) {
-		
-		default:
-			setPropertyChild(PropertyName,Property);
-		}
+
 	}
 	
 	//public abstract void setvar(String var, Object value);

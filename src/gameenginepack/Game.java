@@ -24,7 +24,9 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setTitle(title);
 		window.setVisible(true);
-		
+
+		System.out.println("Window is set up");
+
 		screenFactory = new ScreenFactory(this);
 		gameThread = new GameThread(this);
 		keyboardlistener = new Keyboardlistener();
@@ -40,7 +42,8 @@ public class Game {
 		//window.add(Test,BorderLayout.SOUTH);
 		window.addKeyListener(keyboardlistener);
 		window.addMouseListener(mousepadlistener);
-		
+
+		System.out.println("Starting Thread");
 		new Thread(gameThread).start();
 	}
 	

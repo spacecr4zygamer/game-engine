@@ -1,6 +1,6 @@
-package gameenginepack;
+package gameenginepack.Instances;
 
-import java.awt.Color;
+import gameenginepack.Vector2;
 
 public class Square extends BasePart {
 
@@ -25,13 +25,9 @@ public class Square extends BasePart {
 		this.Size = size;
 		this.BrickColor = BrickColor;
 	}
-	
+
 	@Override
-	public void setPropertyChildChild(String PropertyName, String Property) {
-		// TODO Auto-generated method stub
-		switch (PropertyName) {
-		
-		}
+	public void setProperty(String PropertyName, String Property) {
+		super.setProperty(PropertyName, Property);
 	}
-	
 }

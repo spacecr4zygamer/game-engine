@@ -13,6 +13,7 @@ public class ScreenFactory {
 	public void showScreen(Screen screen) {
 		this.screen = screen;
 		this.screen.onCreate();
+		System.out.println("Showing Screen now");
 	}
 	
 	

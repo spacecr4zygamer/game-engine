@@ -3,24 +3,10 @@ package gameenginepack;
 import gameenginepack.Instances.BasePart;
 import gameenginepack.Instances.Instance;
 import gameenginepack.Instances.Square;
-import gameenginepack.Instances.Triangle;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,7 +25,7 @@ public class MyScreen extends Screen {
 
 	public Vector2 Position = new Vector2();
 	
-	private ArrayList<Object> _Instances = new ArrayList<>();
+	private final ArrayList<Object> _Instances = new ArrayList<>();
 
 
 	public void ReadWorldData(String FILE) {
@@ -60,13 +46,13 @@ public class MyScreen extends Screen {
 				for (int index=0;index<workspacechilds.getLength();index++) {
 					Node tempnode = workspacechilds.item(index);
 					if (tempnode.getNodeType() == Node.ELEMENT_NODE) {
-						System.out.println(tempnode.getNodeName());
+						//System.out.println(tempnode.getNodeName());
 						String Name = tempnode.getNodeName();
 						Class<?> myClass;
 						Object InstanceOfClass = null;
 						try {
 							myClass = Class.forName("gameenginepack.Instances."+Name);
-							System.out.println(myClass.getName()+" REe");
+							//System.out.println(myClass.getName()+" REe");
 							Constructor<?> constructor = myClass.getConstructor();
 							InstanceOfClass = constructor.newInstance();
 						} catch (Exception a) {
@@ -87,7 +73,7 @@ public class MyScreen extends Screen {
 					}
 				}
 			}
-		} catch (ParserConfigurationException | SAXException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -99,7 +85,9 @@ public class MyScreen extends Screen {
 		
 		//System.out.println(Vector2.Transform(new Vector2(1,0), 90).tostring());
 		//System.out.println(new Vector2(1,0).mul(-0.5).tostring());
-		
+
+		System.out.println("Constructor Called");
+
 		Player = new Square(new Vector2(0, 0), new Vector2(25, 25), "black");
 	}
 	
@@ -108,10 +96,7 @@ public class MyScreen extends Screen {
 		// TODO Auto-generated method stub
 		System.out.println("Creating!");
 
-		//ReadWorldData("WorldData/World.xml");
-
-		System.out.println("hey");
-
+		ReadWorldData("WorldData/World.xml");
 		//ReadFile("WorldData/World.xml");
 		//System.out.println(123456789 & 0);
 		//System.out.println(checkPasscode(56));
@@ -189,7 +174,7 @@ public class MyScreen extends Screen {
 	public void onDraw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
 
-		System.out.println("Drawing");
+		//System.out.println("Drawing");
 		// Camera
 
 		// Player Showing
@@ -219,9 +204,9 @@ public class MyScreen extends Screen {
 		//g2d.fillPolygon();
 		// Walls around it
 
-		// System.out.println(Position.tostring());
+		//System.out.println(Position.tostring());
 
-		/*for (int i = 0; i < _Instances.size(); i++) {
+		for (int i = 0; i < _Instances.size(); i++) {
 			BasePart Part = (BasePart) _Instances.get(i);
 			Vector2 DistanceVec = Part.Position.sub(Position).converttorender();
 			// System.out.println(DistanceVec.tostring());
@@ -254,7 +239,7 @@ public class MyScreen extends Screen {
 			// g2d.rotate(10);
 			//}
 			// break;
-		}*/
+		}
 
 	}
 }

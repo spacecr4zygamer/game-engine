@@ -10,7 +10,7 @@ public abstract class Instance {
 	}
 	
 	//public abstract void setvar(String var, Object value);
-	/* Ver‰ndert Variablen
+	/* Ver√§ndert Variablen
 	    *  String var = Variablen Name
 	    *  Object value = Neuer Wert der Variable
 	    * 
@@ -18,7 +18,7 @@ public abstract class Instance {
 	        try {
 	            // Variable abrufen
 	            Field f1 = this.getClass().getField(var);
-	            // Variable ver‰ndern
+	            // Variable ver√§ndern
 	            f1.set(this, value);
 	        } catch (NoSuchFieldException | IllegalAccessException e) {
 	            e.printStackTrace();
@@ -29,7 +29,7 @@ public abstract class Instance {
 	        try {
 	            // Variable abrufen
 	            Field f1 = this.getClass().getField(var);
-	            // Wert zur¸ck geben
+	            // Wert zur√ºck geben
 	            return f1.get(this);
 	        } catch (Exception e) {
 	            e.printStackTrace();

@@ -1,18 +1,16 @@
 package gameenginepack;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
 import javax.swing.JPanel;
+import java.awt.*;
 
-public class GameThread extends JPanel implements Runnable{
+public class Taskscheduler extends JPanel implements Runnable{
 	
 	private final Game game;
 	
-	public GameThread(Game game) {
+	public Taskscheduler(Game game) {
 		this.game = game;
 		setFocusable(true);
+		repaint();
 	}
 	
 	@Override
@@ -23,14 +21,16 @@ public class GameThread extends JPanel implements Runnable{
 			try {
 				if (game.getScreenFactory().getCurrentScreen()!=null) {
 					game.getScreenFactory().getCurrentScreen().onUpdate();
-					Thread.sleep(10);
+					Thread.sleep(1);
+
+					Thread.sleep(9);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void paint(Graphics g)  {
 		System.out.println("Painting");
 		super.paint(g);

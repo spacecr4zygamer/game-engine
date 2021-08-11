@@ -7,9 +7,8 @@ import javax.swing.JFrame;
 
 public class Game {
 	
-	private final JFrame window = new JFrame();
+	private final JFrame window = new JFrame("Game Engine");
 	private final ScreenFactory screenFactory;
-	private final GameThread gameThread;
 	private final Keyboardlistener keyboardlistener;
 	private final Mousepadlistener mousepadlistener;
 	//private JLabel Test;
@@ -28,7 +27,7 @@ public class Game {
 		System.out.println("Window is set up");
 
 		screenFactory = new ScreenFactory(this);
-		gameThread = new GameThread(this);
+		Taskscheduler taskthread = new Taskscheduler(this);
 		keyboardlistener = new Keyboardlistener();
 		mousepadlistener = new Mousepadlistener();
 		
@@ -38,13 +37,13 @@ public class Game {
 		//Test.setLocation(100,100);
 		//Test.setVisible(true);
 		
-		window.add(gameThread);
+		window.add(taskthread);
 		//window.add(Test,BorderLayout.SOUTH);
 		window.addKeyListener(keyboardlistener);
 		window.addMouseListener(mousepadlistener);
 
 		System.out.println("Starting Thread");
-		new Thread(gameThread).start();
+		new Thread(taskthread).start();
 	}
 	
 	public Mousepadlistener getMouseListener() {

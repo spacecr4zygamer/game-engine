@@ -15,6 +15,8 @@ public abstract class BasePart extends Instance {
 	/*public BasePart(Vector2 pos) {
 		this.Position = pos;
 	}
+
+
 	
 	public BasePart(Vector2 pos,Vector2 size) {
 		this.Position = pos;
@@ -66,7 +68,7 @@ public abstract class BasePart extends Instance {
 		 try {
 	            // Variable abrufen
 	            Field f1 = this.getClass().getField(var);
-	            // Variable ver‰ndern
+	            // Variable ver√§ndern
 	            f1.set(this, value);
 	        } catch (NoSuchFieldException | IllegalAccessException e) {
 	            e.printStackTrace();

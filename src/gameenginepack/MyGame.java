@@ -5,7 +5,7 @@ public class MyGame {
 	private Game game;
 	
 	public MyGame() {
-		game = new Game(600,400, "My Game");
+		game = new Game(800,600, "My Game");
 		game.getScreenFactory().showScreen(new MyScreen(game.getScreenFactory()));
 	}
 	

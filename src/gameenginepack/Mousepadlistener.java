@@ -11,7 +11,6 @@ public class Mousepadlistener implements MouseListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		// TODO Auto-generated method stub
 		mouseX = event.getX();
 		mouseY = event.getY();
 		clicked = true;
@@ -19,26 +18,22 @@ public class Mousepadlistener implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent event) {
-		// TODO Auto-generated method stub
 		mouseClicked(event);
 		//clicked = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent event) {
-		// TODO Auto-generated method stub
 		//mouseClicked(event);
 		clicked = false;
 	}

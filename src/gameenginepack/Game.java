@@ -42,6 +42,8 @@ public class Game {
 		window.addKeyListener(keyboardlistener);
 		window.addMouseListener(mousepadlistener);
 
+		screenFactory.showScreen(new MyScreen(screenFactory));
+
 		System.out.println("Starting Thread");
 		new Thread(taskthread).start();
 	}

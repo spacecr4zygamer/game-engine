@@ -9,19 +9,16 @@ public class Keyboardlistener implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent event) {
-		// TODO Auto-generated method stub
 		keys[event.getKeyCode()] = true;
 	}
 
 	@Override
 	public void keyReleased(KeyEvent event) {
-		// TODO Auto-generated method stub
 		keys[event.getKeyCode()] = false;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 	

@@ -33,7 +33,6 @@ public abstract class BasePart extends Instance {
 
 	@Override
 	public void setProperty(String PropertyName, String Property) {
-		// TODO Auto-generated method stub
 		switch(PropertyName) {
 			case "Position":
 				this.Position = Vector2.fromString(Property);
@@ -64,7 +63,6 @@ public abstract class BasePart extends Instance {
 
 	/*@Override
 	public void setvar(String var, Object value) {
-		// TODO Auto-generated method stub
 		 try {
 	            // Variable abrufen
 	            Field f1 = this.getClass().getField(var);

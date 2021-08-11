@@ -80,7 +80,6 @@ public class MyScreen extends Screen {
 
 	public MyScreen(ScreenFactory screenFactory) {
 		super(screenFactory);
-		// TODO Auto-generated constructor stub
 		// String string = "Hey,However";
 		
 		//System.out.println(Vector2.Transform(new Vector2(1,0), 90).tostring());
@@ -93,10 +92,11 @@ public class MyScreen extends Screen {
 	
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		System.out.println("Creating!");
 
 		ReadWorldData("WorldData/World.xml");
+
+		System.out.println("Initialized");
 		//ReadFile("WorldData/World.xml");
 		//System.out.println(123456789 & 0);
 		//System.out.println(checkPasscode(56));
@@ -112,7 +112,6 @@ public class MyScreen extends Screen {
 		Vector2 CurrentSpeed = new Vector2();
 		//System.out.println("Updating");
 		// boolean moving = false;
-		// TODO Auto-generated method stub
 		if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
 			CurrentSpeed.x -= 1;
 			// moving = true;
@@ -172,7 +171,6 @@ public class MyScreen extends Screen {
 
 	@Override
 	public void onDraw(Graphics2D g2d) {
-		// TODO Auto-generated method stub
 
 		//System.out.println("Drawing");
 		// Camera

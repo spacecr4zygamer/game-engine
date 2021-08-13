@@ -1,28 +1,36 @@
 package gameenginepack;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 
-import javax.swing.JFrame;
+import java.awt.*;
+
+
+import javax.swing.*;
 
 public class Game {
-	
+
+	private final Workspace workspace;
+
 	private final JFrame window = new JFrame("Game Engine");
 	private final ScreenFactory screenFactory;
 	private final Keyboardlistener keyboardlistener;
 	private final Mousepadlistener mousepadlistener;
-	//private JLabel Test;
+	private JPanel Explorer;
 	
 	public Game(int windowX, int windowY, String title) {
+
+		this.workspace = new Workspace(this);
+
+
 		window.setSize(windowX,windowY);
 		window.setLayout(new BorderLayout());
-		//System.out.println(window.getLayout());
-		window.setResizable(false);
+		System.out.println(window.getLayout());
+		window.setResizable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setFocusable(true);
 		window.setLocationRelativeTo(null);
 		window.setTitle(title);
 		window.setVisible(true);
+		//window.setFocusable(true);
 
 		System.out.println("Window is set up");
 
@@ -31,19 +39,26 @@ public class Game {
 		keyboardlistener = new Keyboardlistener();
 		mousepadlistener = new Mousepadlistener();
 		
-		//Test = new JLabel("HEEEEY");
-		//Test.setBounds(500, 200, 200, 200);
+		Explorer = new JPanel();
+		Explorer.setBounds(500, 200, 5000, 500);
 		//Test.setSize(100,100);
 		//Test.setLocation(100,100);
-		//Test.setVisible(true);
+		Explorer.setVisible(true);
 		
+
+		window.add(Explorer,BorderLayout.WEST);
 		window.add(taskthread);
-		//window.add(Test,BorderLayout.SOUTH);
 		window.addKeyListener(keyboardlistener);
 		window.addMouseListener(mousepadlistener);
 
 		screenFactory.showScreen(new MyScreen(screenFactory));
 
+
+//		try {
+//			//Thread.sleep(100);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		System.out.println("Starting Thread");
 		new Thread(taskthread).start();
 	}
@@ -63,4 +78,9 @@ public class Game {
 	public JFrame getWindow() {
 		return window;
 	}
+
+	public Workspace getWorkspace() {
+		return workspace;
+	};
+
 }

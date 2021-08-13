@@ -42,7 +42,6 @@ public abstract class BasePart extends Instance {
 				break;
 			case "Velocity":
 				this.Velocity = Vector2.fromString(Property);
-
 				break;
 			case "BrickColor":
 				this.BrickColor = Property;

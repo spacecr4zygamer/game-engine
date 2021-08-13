@@ -6,17 +6,20 @@ public class Square extends BasePart {
 
 	public Square() {
 		//super("BasePart.Square");
+		init();
 	}
 	
 	public Square(Vector2 pos) {
 		//super("BasePart");
 		this.Position = pos;
+		init();
 	}
 	
 	public Square(Vector2 pos,Vector2 size) {
 		//super("BasePart");
 		this.Position = pos;
 		this.Size = size;
+		init();
 	}
 	
 	public Square(Vector2 pos,Vector2 size,String BrickColor) {
@@ -24,6 +27,11 @@ public class Square extends BasePart {
 		this.Position = pos;
 		this.Size = size;
 		this.BrickColor = BrickColor;
+		init();
+	}
+
+	private void init() {
+		this.Name = "Square";
 	}
 
 	@Override

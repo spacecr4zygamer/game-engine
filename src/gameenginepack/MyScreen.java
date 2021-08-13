@@ -69,6 +69,7 @@ public class MyScreen extends Screen {
 							}
 
 							_Instances.add((Instance) InstanceOfClass);
+							getScreenFactory().getGame().getWorkspace().appendChild((Instance) InstanceOfClass);
 						}
 					}
 				}
@@ -89,12 +90,46 @@ public class MyScreen extends Screen {
 
 		Player = new Square(new Vector2(0, 0), new Vector2(25, 25), "black");
 	}
-	
+
+	private void bubblesort() {
+		int[] tosort = {8,6,1,5,7,3,2,4,154,81,56,1,9784,98,41,561,56,156,489,14568,156,1489,498,156,19568};
+		boolean stillsorting = true;
+		while (stillsorting) {
+			for (int e : tosort) {
+				System.out.print(e+" ");
+			}
+			System.out.print("\n");
+			boolean done = true;
+			for (int i=0;i<tosort.length-1;i++) {
+				int index1 = tosort[i];
+				int index2 = tosort[i+1];
+				if (index2<index1) {
+					tosort[i] = index2;
+					tosort[i+1] = index1;
+					done = false;
+				}
+
+			}
+			if (done==true) {
+				stillsorting = false;
+			}
+		}
+	}
+
 	@Override
 	public void onCreate() {
+		//bubblesort();
+
 		System.out.println("Creating!");
 
 		ReadWorldData("WorldData/World.xml");
+
+		for (Instance child: getScreenFactory().getGame().getWorkspace().GetChildren()) {
+			System.out.println(child);
+		}
+
+		//System.out.println(getScreenFactory().getGame().getWorkspace().FindFirstChildOfClass("Square"));
+		//System.out.println(getScreenFactory().getGame().getWorkspace().FindFirstChild("Square"));
 
 		System.out.println("Initialized");
 		//ReadFile("WorldData/World.xml");

@@ -15,8 +15,4 @@ public class Workspace extends Instance {
         this.game = game;
 
     }
-
-    public void appendChild(Instance Child) {
-        this.Children.add(Child);
-    }
 }

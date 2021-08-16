@@ -14,17 +14,18 @@ public class Game {
 	private final ScreenFactory screenFactory;
 	private final Keyboardlistener keyboardlistener;
 	private final Mousepadlistener mousepadlistener;
+	public final Enum RenderType;
 	private JPanel Explorer;
 	
-	public Game(int windowX, int windowY, String title) {
+	public Game(int windowX, int windowY, String title,Enum VersionD) {
 
 		this.workspace = new Workspace(this);
-
+		this.RenderType = VersionD;
 
 		window.setSize(windowX,windowY);
 		window.setLayout(new BorderLayout());
 		System.out.println(window.getLayout());
-		window.setResizable(true);
+		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setFocusable(true);
 		window.setLocationRelativeTo(null);
@@ -39,14 +40,15 @@ public class Game {
 		keyboardlistener = new Keyboardlistener();
 		mousepadlistener = new Mousepadlistener();
 		
-		Explorer = new JPanel();
-		Explorer.setBounds(500, 200, 5000, 500);
+		//Explorer = new JPanel();
+		//Explorer.setBounds(500, 500, 5000, 500);
+
 		//Test.setSize(100,100);
 		//Test.setLocation(100,100);
-		Explorer.setVisible(true);
+		//Explorer.setVisible(true);
 		
 
-		window.add(Explorer,BorderLayout.WEST);
+		//window.add(Explorer,BorderLayout.WEST);
 		window.add(taskthread);
 		window.addKeyListener(keyboardlistener);
 		window.addMouseListener(mousepadlistener);

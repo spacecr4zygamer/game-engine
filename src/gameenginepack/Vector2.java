@@ -23,6 +23,10 @@ public class Vector2 {
 		Vector2 r = new Vector2(string);
 		this.set(r.x, r.y);
 	}
+
+	public double dot(Vector2 other) {
+		return 0;
+	}
 	
 	public Vector2 clone() {
 		return new Vector2(this.x,this.y);

@@ -3,18 +3,17 @@ package gameenginepack;
 import gameenginepack.Instances.BasePart;
 import gameenginepack.Instances.Instance;
 import gameenginepack.Instances.Square;
+import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
+import javax.lang.model.util.Elements;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -321,7 +320,7 @@ end
         return new Polygon(xpoints, ypoints, 3);
     }
 
-    double intersect_Line_Triangle(Vector3 Origin,Vector3 Direction, Vector3 PlaneNormal, Vector3 Plane, Vector3[] Verts) {
+    private double intersect_Line_Triangle(Vector3 Origin, Vector3 Direction, Vector3 PlaneNormal, Vector3 Plane, Vector3[] Verts) {
         /*
         if PlaneN:Dot(LineD.unit) == 0 then return nil end
         if LineD.Magnitude == 0 then return nil end
@@ -342,7 +341,23 @@ end
             return nil
         end
         */
-        return 0;
+        if (PlaneNormal.dot(Direction.normalize()) == 0) {return -1;}
+        if (Direction.magnitude() == 0) { return -1;}
+        double d = (PlaneNormal.dot(Plane) - PlaneNormal.dot(Origin)) / (PlaneNormal.dot(Direction));
+        if (d<0) {return -1;}
+
+            Vector3 Q = Origin.add(Direction.mul(d));
+            if (Verts[1].sub(Verts[0]).cross(Q.sub(Verts[0])).dot(PlaneNormal) >= 0 &&
+                Verts[2].sub(Verts[1]).cross(Q.sub(Verts[1])).dot(PlaneNormal) >= 0 &&
+                Verts[0].sub(Verts[2]).cross(Q.sub(Verts[2])).dot(PlaneNormal) >= 0) {
+                //System.out.println("Hit");
+                return d;
+            } else {
+                //System.out.println("Missed");
+                return -1;
+            }
+
+
     }
 
 
@@ -422,11 +437,47 @@ end
             g2d.drawRect(3, y - 17, 165, 15);
         } else {
             // 3D Rendering
+            Vector3 a = new Vector3(0,1,1),
+                    b = new Vector3(0,0,0),
+                    c = new Vector3(0,1,0);
+            CFrame Origin = new CFrame();
+            //Origin = new Vector3(-1,0,0)
+            int max_x = 800, max_y = 600;
+
+            Vector3[] Verts = {a,b,c};
+
+            double ImageWidth = 800, ImageHeight = 600, ImageRatio = 800/600;
+
+            int FOV = 70;
+
+
+
             g2d.setBackground(Color.BLACK);
-            for (int x = 0; x<800;x++) {
-                for (int y = 0; y<600;y++) {
-                    g2d.setColor(Color.darkGray);
-                    g2d.fillRect(x, y, 1, 1);
+            for (int x = 0; x<max_x;x++) {
+                for (int y = 0; y<max_y;y++) {
+
+                    double Px = (2 * ((x + 0.5) / ImageWidth) - 1) * Math.tan(FOV / 2 * Math.PI / 180) * ImageRatio;
+                    double Py = (1 - 2 * ((y + 0.5) / ImageHeight)) * Math.tan(FOV / 2 * Math.PI /180);
+
+
+                    CFrame rayDirection = new CFrame(Px,Py,-1);//.sub(Origin);
+                    Vector3 LineDirection = new CFrame(Origin.Position,(Origin.mul(rayDirection)).Position).BackVector.mul(-1);
+
+                    Vector3 Normal = (Verts[1].sub(Verts[0])).cross((Verts[2].sub(Verts[0])));
+                    double result = intersect_Line_Triangle(Origin.Position,LineDirection,Verts[0],Normal.normalize(),Verts);
+
+                    if (result >= 0) {
+                        g2d.setColor(Color.blue);
+                        g2d.fillRect(x, y, 1, 1);
+                    } else {
+                        g2d.setColor(Color.darkGray);
+                        g2d.fillRect(x, y, 1, 1);
+                    }
+                    //Pixel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)//--:Lerp(Color3.fromRGB(0, 0, 0),result/500)
+                    //Pixel.BackgroundColor3 = Color3.fromRGB(44, 0, 32)
+
+
+
                 }
             }
 

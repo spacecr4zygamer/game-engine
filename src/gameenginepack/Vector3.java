@@ -1,7 +1,7 @@
 package gameenginepack;
 
 public class Vector3 {
-    private double x=0,y=0,z=0;
+    public double x=0,y=0,z=0;
 
     public Vector3() {}
 
@@ -27,6 +27,10 @@ public class Vector3 {
     public static Vector3 fromString(String string) {
         String[] ree = string.split(",");
         return new Vector3(Double.parseDouble(ree[0]),Double.parseDouble(ree[1]),Double.parseDouble(ree[2]));
+    }
+
+    public Vector3 clone() {
+        return new Vector3(this.x,this.y,this.z);
     }
 
     public Vector3 mul(Vector3 other) {
@@ -62,13 +66,23 @@ public class Vector3 {
                 s_2 = a_3*b_1-a_1*b_3,
                 s_3 = a_1*b_2-a_2*b_1;
 
-        System.out.println(s_1+" "+s_2+" "+s_3);
+        Result.x = s_1;
+        Result.y = s_2;
+        Result.z = s_3;
 
         return Result;
     }
 
+    public double magnitude() {
+        return Math.sqrt(this.x+this.y+this.z);
+    }
+
     public double dot(Vector3 other) {
-        return 0;
+        return this.x*other.x+this.y*other.y+this.z*other.z;
+    }
+
+    public Vector3 normalize() {
+        return this.clone().div(this.magnitude());
     }
 
 

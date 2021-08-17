@@ -23,6 +23,7 @@ public class MyScreen extends Screen {
     private final BasePart Player;
 
     public Vector2 Position = new Vector2();
+    public CFrame Origin;
 
     private final ArrayList<Object> _Instances = new ArrayList<>();
 
@@ -80,6 +81,8 @@ public class MyScreen extends Screen {
 
     public MyScreen(ScreenFactory screenFactory) {
         super(screenFactory);
+
+        this.Origin = new CFrame(0,0,0);
         // String string = "Hey,However";
 
         //System.out.println(Vector2.Transform(new Vector2(1,0), 90).tostring());
@@ -261,10 +264,12 @@ end
     public void onUpdate() {
         int Speed = 10;
         Vector2 CurrentSpeed = new Vector2();
+        CFrame CFSpeed = new CFrame();
         //System.out.println("Updating");
         // boolean moving = false;
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
             CurrentSpeed.x -= 1;
+            CFSpeed = CFSpeed.mul(new CFrame(-1,0,0));
             // moving = true;
             // this.Position.x += 20;
             // this.Player.Position.x -= 2;
@@ -272,6 +277,7 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_D)) {
             CurrentSpeed.x += 1;
+            CFSpeed = CFSpeed.mul(new CFrame(1,0,0));
             // moving = true;
             // this.Position.x -= 20;
             // this.Player.Position.x += 2;
@@ -279,6 +285,7 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_W)) {
             CurrentSpeed.y += 1;
+            CFSpeed = CFSpeed.mul(new CFrame(0,0,-1));
             // moving = true;
             // this.Position.y += 20;
             // this.Player.Position.y -= 2;
@@ -286,13 +293,16 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_S)) {
             CurrentSpeed.y -= 1;
+            CFSpeed = CFSpeed.mul(new CFrame(0,0,1));
             // moving = true;
             // this.Position.y -= 20;
             // this.Player.Position.y += 2;
         }
         if (CurrentSpeed.magnitude() > 0) {
             // System.out.println(CurrentSpeed.unit().tostring());
+            System.out.println("The Current speed is: "+CFSpeed.Position.tostring());
             Position = Position.add(CurrentSpeed.unit().mul(Speed));
+            this.Origin = this.Origin.mul(new CFrame(1,0,0));
         }
     }
 
@@ -344,6 +354,7 @@ end
         if (PlaneNormal.dot(Direction.normalize()) == 0) {return -1;}
         if (Direction.magnitude() == 0) { return -1;}
         double d = (PlaneNormal.dot(Plane) - PlaneNormal.dot(Origin)) / (PlaneNormal.dot(Direction));
+        //System.out.println(d);
         if (d<0) {return -1;}
 
             Vector3 Q = Origin.add(Direction.mul(d));
@@ -436,23 +447,26 @@ end
             g2d.drawString("Player Position: " + Math.round(Position.x) + " / " + Math.round(Position.y), 5, y - 5);
             g2d.drawRect(3, y - 17, 165, 15);
         } else {
+
             // 3D Rendering
             Vector3 a = new Vector3(0,1,1),
                     b = new Vector3(0,0,0),
                     c = new Vector3(0,1,0);
-            CFrame Origin = new CFrame();
+            //CFrame Origin = new CFrame(0,0,0);
             //Origin = new Vector3(-1,0,0)
             int max_x = 800, max_y = 600;
 
             Vector3[] Verts = {a,b,c};
 
-            double ImageWidth = 800, ImageHeight = 600, ImageRatio = 800/600;
+            double ImageWidth = 800, ImageHeight = 600, ImageRatio = 800f/600f;
 
-            int FOV = 70;
+            float FOV = 170;
+
+            System.out.println(this.Origin.Position.tostring());
 
 
 
-            g2d.setBackground(Color.BLACK);
+            //g2d.setBackground(Color.BLACK);
             for (int x = 0; x<max_x;x++) {
                 for (int y = 0; y<max_y;y++) {
 
@@ -463,14 +477,19 @@ end
                     CFrame rayDirection = new CFrame(Px,Py,-1);//.sub(Origin);
                     Vector3 LineDirection = new CFrame(Origin.Position,(Origin.mul(rayDirection)).Position).BackVector.mul(-1);
 
+                    Vector3 PlaneOrigin = Verts[0].add(Verts[1]).add(Verts[2]).div(3);
+
                     Vector3 Normal = (Verts[1].sub(Verts[0])).cross((Verts[2].sub(Verts[0])));
-                    double result = intersect_Line_Triangle(Origin.Position,LineDirection,Verts[0],Normal.normalize(),Verts);
+                    double result = intersect_Line_Triangle(Origin.Position,LineDirection.normalize(),PlaneOrigin,Normal.normalize(),Verts);
+
+                    //System.out.println(result);
 
                     if (result >= 0) {
-                        g2d.setColor(Color.blue);
+                        g2d.setColor(Color.decode(new Color3(255, 255, 255).lerp(new Color3(0,0,0),result/500).encodetoHex()));
+                        //g2d.setColor(Color.blue);
                         g2d.fillRect(x, y, 1, 1);
                     } else {
-                        g2d.setColor(Color.darkGray);
+                        g2d.setColor(Color.pink);
                         g2d.fillRect(x, y, 1, 1);
                     }
                     //Pixel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)//--:Lerp(Color3.fromRGB(0, 0, 0),result/500)

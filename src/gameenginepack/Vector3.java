@@ -74,7 +74,7 @@ public class Vector3 {
     }
 
     public double magnitude() {
-        return Math.sqrt(this.x+this.y+this.z);
+        return Math.sqrt(Math.pow(this.x,2)+Math.pow(this.y,2)+Math.pow(this.z,2));
     }
 
     public double dot(Vector3 other) {
@@ -85,6 +85,9 @@ public class Vector3 {
         return this.clone().div(this.magnitude());
     }
 
+    public Vector3 lerp(Vector3 vector,double t) {
+        return this.add(vector.sub(this).mul(t));
+    }
 
 
 

@@ -23,6 +23,10 @@ public class CFrame {
         this.Position = new Vector3(x, y, z);
     }
 
+    private static final Vector3
+            DOWN = new Vector3(0,-1,0),
+            FRONT = new Vector3(0,0,-1);
+
     /**
      * Creates a CFrame that is Positioned at the first Vector3 and looks at the second Vector3.
      *
@@ -60,17 +64,17 @@ public class CFrame {
 		self.proxy.m31, self.proxy.m32, self.proxy.m33 = xaxis.z, yaxis.z, zaxis.z;
          */
         Vector3 zaxis = (a.sub(b)).normalize(),
-                xaxis = new Vector3(0, 1, 0).cross(zaxis).normalize(),
-                yaxis = zaxis.cross((xaxis)).normalize();
+                xaxis = Vector3.Cross(Vector3.UP,zaxis).normalize(),
+                yaxis = Vector3.Cross(zaxis,xaxis).normalize();
         if (xaxis.magnitude() == 0) {
             if (zaxis.y == 0) {
-                xaxis = new Vector3(0, 0, -1);
-                yaxis = new Vector3(1, 0, 0);
-                zaxis = new Vector3(0, -1, 0);
+                xaxis = FRONT;
+                yaxis = Vector3.RIGHT;
+                zaxis = DOWN;
             } else {
-                xaxis = new Vector3(0, 0, 1);
-                yaxis = new Vector3(1, 0, 0);
-                zaxis = new Vector3(0, 1, 0);
+                xaxis = Vector3.BACK;
+                yaxis = Vector3.RIGHT;
+                zaxis = Vector3.UP;
             }
         }
         //local right = Vector3.new(m11, m21, m31) -- This is the same as cf.rightVector
@@ -84,7 +88,7 @@ public class CFrame {
 
     private static Vector3 vectorAxisAngle(Vector3 n, Vector3 v, double t) {
         n = n.normalize();
-        return v.mul(Math.cos(t)).add(n.mul(v.dot(n)).mul(1-Math.cos(t))).add(n.cross(v).mul(Math.sin(t)));
+        return v.mul(Math.cos(t)).add(n.mul(Vector3.Dot(v,n)).mul(1-Math.cos(t))).add(Vector3.Cross(n,v).mul(Math.sin(t)));
         //return v * (float)Math.Cos(t) + Vector3.Dot(v, n) * n * (1 - (float)Math.Cos(t)) + Vector3.Cross(n, v) * (float)Math.Sin(t);
     }
 

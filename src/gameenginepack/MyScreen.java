@@ -29,6 +29,10 @@ public class MyScreen extends Screen {
 
     private final Game game = null;
 
+    Vector3 a = new Vector3(-5, 5, -5),
+            b = new Vector3(-5, 1, 5),
+            c = new Vector3(-6, -1, -5);
+    Vector3[] Verts = {a, b, c};
 
     public void ReadWorldData(String FILE) {
         try {
@@ -353,23 +357,23 @@ end
             return nil
         end
         */
-        if (PlaneNormal.dot(Direction) == 0) {
+        if (Vector3.Dot(PlaneNormal,Direction) == 0) {
             return -1;
         }
         if (Direction.magnitude() == 0) {
             return -2;
         }
         //System.out.println(PlaneNormal.tostring() + "|" + Plane.tostring() + "|" + PlaneNormal.dot(Plane)+"|Ori|"+Origin.tostring()+"|P_O|"+PlaneNormal.dot(Origin)+"|D|"+Direction.tostring()+"|P_D|"+PlaneNormal.dot(Direction));
-        double d = (PlaneNormal.dot(Plane) - PlaneNormal.dot(Origin)) / (PlaneNormal.dot(Direction));
+        double d = (Vector3.Dot(PlaneNormal,Plane) - Vector3.Dot(PlaneNormal,Origin)) / Vector3.Dot(PlaneNormal,Direction);
         //System.out.println(d);
         if (d < 0) {
             return -3;
         }
 
         Vector3 Q = Origin.add(Direction.mul(d));
-        if (Verts[1].sub(Verts[0]).cross(Q.sub(Verts[0])).dot(PlaneNormal) >= 0 &&
-                Verts[2].sub(Verts[1]).cross(Q.sub(Verts[1])).dot(PlaneNormal) >= 0 &&
-                Verts[0].sub(Verts[2]).cross(Q.sub(Verts[2])).dot(PlaneNormal) >= 0) {
+        if (Vector3.Dot(Vector3.Cross(Verts[1].sub(Verts[0]),Q.sub(Verts[0])),PlaneNormal) >= 0 &&
+                Vector3.Dot(Vector3.Cross(Verts[2].sub(Verts[1]),Q.sub(Verts[1])),PlaneNormal) >= 0 &&
+                Vector3.Dot(Vector3.Cross(Verts[0].sub(Verts[2]),Q.sub(Verts[2])),PlaneNormal) >= 0) {
             //System.out.println("Hit");
             return d;
         } else {
@@ -458,16 +462,14 @@ end
         } else {
 
             // 3D Rendering
-            Vector3 a = new Vector3(-5, 5, -5),
-                    b = new Vector3(-5, 1, 5),
-                    c = new Vector3(-6, -1, -5);
+
             //CFrame Origin = new CFrame(0,0,0);
             //Origin = new Vector3(-1,0,0)
             int max_x = 800, max_y = 600;
 
             //this.Origin = new CFrame(this.Origin.Position,a);//Origin.mul(CFrame.Angles(0,Math.toRadians(10),0));
             Origin = Origin.mul(CFrame.Angles(0,Math.toRadians(10),0));
-            Vector3[] Verts = {a, b, c};
+
 
             double ImageWidth = 800, ImageHeight = 600, ImageRatio = 800f / 600f;
 
@@ -492,14 +494,14 @@ end
 
                     //Vector3 PlaneOrigin = Verts[0].add(Verts[1]).add(Verts[2]).div(3);
 
-                    Vector3 Normal = (Verts[1].sub(Verts[0])).cross((Verts[2].sub(Verts[0])));
+                    Vector3 Normal = Vector3.Cross(Verts[1].sub(Verts[0]),Verts[2].sub(Verts[0]));
                     double result = intersect_Line_Triangle(this.Origin.Position, LineDirection.normalize(), Normal.normalize(), Verts[0], Verts);
 
                     //if (result < 0) {System.out.println(result);}
                     //System.out.println(result);
 
                     if (result >= 0) {
-                        g2d.setColor(Color.decode(new Color3(255, 255, 255).lerp(new Color3(0, 0, 0), result / 10).encodetoHex()));
+                        g2d.setColor(Color.decode(Color3.Lerp(Color3.White,Color3.Black,result / 10).encodetoHex()));
                         //g2d.setColor(Color.blue);
                         g2d.fillRect(x, y, 1, 1);
                     } else {

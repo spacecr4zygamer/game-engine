@@ -7,6 +7,9 @@ public class Color3 {
     private short r,g,b;
 
     private static final String[] Converts = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
+    public static final Color3
+            White = new Color3(255,255,255),
+            Black = new Color3(0,0,0);
 
     public static String getHex(Number Decimal) {
         StringBuilder sb = new StringBuilder("");

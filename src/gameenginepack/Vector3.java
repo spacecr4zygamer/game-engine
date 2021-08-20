@@ -124,7 +124,7 @@ public class Vector3 {
      * @param other The second Vector3
      * @return The Cross Product of the Vector3's
      */
-    public Vector3 cross(Vector3 other) {
+    /*public Vector3 cross(Vector3 other) {
         Vector3 Result = new Vector3();
         double a_1 = this.x,a_2 = this.y,a_3 = this.z;
         double b_1 = other.x,b_2 = other.y,b_3 = other.z;
@@ -138,6 +138,10 @@ public class Vector3 {
         Result.z = s_3;
 
         return Result;
+    }*/
+
+    public static Vector3 Cross(Vector3 a, Vector3 b) {
+        return new Vector3(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x);
     }
 
     /**
@@ -153,10 +157,13 @@ public class Vector3 {
      * @param other The second Vector3
      * @return The Dot product
      */
-    public double dot(Vector3 other) {
+    /*public double dot(Vector3 other) {
         return this.x*other.x+this.y*other.y+this.z*other.z;
-    }
+    }*/
 
+    public static double Dot(Vector3 a, Vector3 b) {
+        return a.x*b.x+a.y*b.y+a.z*b.z;
+    }
     /**
      * Returns a Normalized Vector3 that has a Magnitude of 1 into any Direction.
      * @return The normalized Vector3
@@ -176,5 +183,9 @@ public class Vector3 {
         return this.add(vector.sub(this).mul(alpha));
     }
 
+
+    public static Vector3 Lerp(Vector3 begin,Vector3 end, double alpha) {
+        return begin.clone().add(end.sub(begin).mul(alpha));
+    }
 
 }

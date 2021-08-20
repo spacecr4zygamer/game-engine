@@ -1,5 +1,6 @@
 package gameenginepack.Instances;
 
+import gameenginepack.Color3;
 import gameenginepack.Vector2;
 
 public abstract class BasePart extends Instance {
@@ -8,6 +9,7 @@ public abstract class BasePart extends Instance {
 	public boolean Shown = true;
 	public double Rotation = 0;
 	public String BrickColor = "gray";
+	public Color3 Color = new Color3(145,145,145);
 	public Vector2 Size = new Vector2(40,20);
 	public Vector2 Velocity = new Vector2(0,0);
 	public boolean CanCollide = false;

@@ -26,11 +26,11 @@ public class Taskscheduler extends JPanel implements Runnable{
 			try {
 				if (game.getScreenFactory().getCurrentScreen()!=null) {
 					game.getScreenFactory().getCurrentScreen().onUpdate();
-					Thread.sleep(1);
+					Thread.sleep(100);
 					//System.out.println(game.getWindow().getGraphics().create());
 					//paint(game.getWindow).getGraphics().create(200,200,800,600));
 					//paint(graphic);
-					Thread.sleep(9);
+					//Thread.sleep(9);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

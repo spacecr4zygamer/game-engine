@@ -2,21 +2,31 @@ package gameenginepack;
 
 public class Vector2 {
 	public double x = 0,y = 0;
-	
+
 	public Vector2() {
 		this.x = 0;
 		this.y = 0;
 	}
-	
+
+	/**
+	 *
+	 * @param x The X position
+	 * @param y The Y position
+	 */
 	public Vector2(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public Vector2 set(double x,double y) {
+
+	/**
+	 * Sets the Vector2 to this.
+	 * @param x The X position
+	 * @param y The Y position
+	 */
+
+	public void set(double x,double y) {
 		this.x = x;
 		this.y = y;
-		return this;
 	}
 	
 	public Vector2(String string) {

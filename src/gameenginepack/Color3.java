@@ -10,13 +10,33 @@ public class Color3 {
 
     public static String getHex(Number Decimal) {
         StringBuilder sb = new StringBuilder("");
-        while (Decimal.shortValue() > 0) {
+        /*while (Decimal.shortValue() > 0) {
             float Result = (Decimal.floatValue())/16;
             short meh = (short) Result;
             float Rest = Result-meh;
             sb.append(Converts[(int) (Rest*16)]);
             Decimal=meh;
+        }*/
+
+        {float Result = (Decimal.floatValue())/16;
+        short meh = (short) Result;
+        float Rest = Result-meh;
+        if (Rest>0) {
+            sb.append(Converts[(int) (Rest * 16)]);
+        } else {
+            sb.append(Converts[0]);
         }
+        Decimal=meh;
+        }
+        {float Result = (Decimal.floatValue())/16;
+        short meh = (short) Result;
+        float Rest = Result-meh;
+        if (Rest>0) {
+            sb.append(Converts[(int) (Rest * 16)]);
+        } else {
+            sb.append(Converts[0]);
+        }}
+
         sb.reverse();
         return sb.toString();
     }
@@ -34,6 +54,14 @@ public class Color3 {
         this.r = clamp(r,255,0).shortValue();
         this.g = clamp(g,255,0).shortValue();
         this.b = clamp(b,255,0).shortValue();
+    }
+
+    public static Color3 Lerp(Color3 begin, Color3 end, double alpha) {
+        short newr = (short) (begin.r+(end.r-begin.r)*alpha);
+        short newg = (short) (begin.g+(end.g-begin.g)*alpha);
+        short newb = (short) (begin.b+(end.b-begin.b)*alpha);
+
+        return new Color3(newr,newg,newb);
     }
 
     public Color3 lerp(Color3 other, double alpha) {

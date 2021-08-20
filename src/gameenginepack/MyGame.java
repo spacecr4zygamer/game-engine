@@ -7,11 +7,16 @@ public class MyGame {
 	public MyGame() {
 		game = new Game(800,600, "My Game",Gamestates.ThreeD);
 
-		CFrame a = new CFrame(0,0,0);
-		//System.out.println(a.BackVector.tostring());
-		CFrame b = new CFrame(1,0,0);
+		//Vector3 m = new Vector3(5,2,3), n = new Vector3(0,3,1);
 
-		CFrame c = a.mul(b);
+		//System.out.println(m.sub(n).tostring());
+		//System.out.println(m.sub(n).normalize().tostring());
+
+		//CFrame a = new CFrame(0,0,0);
+		//System.out.println(a.BackVector.tostring());
+		//CFrame b = new CFrame(1,0,0);
+
+		//CFrame c = a.mul(b);
 
 		//System.out.println("Test Calculation: "+c.Position.tostring());
 

@@ -119,11 +119,7 @@ public class Vector3 {
         return new Vector3(this.x/a,this.y/a,this.z/a);
     }
 
-    /**
-     * Calculates the Cross product of two Vector3's.
-     * @param other The second Vector3
-     * @return The Cross Product of the Vector3's
-     */
+
     /*public Vector3 cross(Vector3 other) {
         Vector3 Result = new Vector3();
         double a_1 = this.x,a_2 = this.y,a_3 = this.z;
@@ -149,14 +145,10 @@ public class Vector3 {
      * @return The distance to Center of the World
      */
     public double magnitude() {
-        return Math.sqrt(Math.pow(this.x,2)+Math.pow(this.y,2)+Math.pow(this.z,2));
+        return Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z);
     }
 
-    /**
-     * Calculates the Dot product of two Vector3's that describes how far two Vector3's go in the same Direction.
-     * @param other The second Vector3
-     * @return The Dot product
-     */
+
     /*public double dot(Vector3 other) {
         return this.x*other.x+this.y*other.y+this.z*other.z;
     }*/
@@ -164,12 +156,19 @@ public class Vector3 {
     public static double Dot(Vector3 a, Vector3 b) {
         return a.x*b.x+a.y*b.y+a.z*b.z;
     }
+
     /**
      * Returns a Normalized Vector3 that has a Magnitude of 1 into any Direction.
      * @return The normalized Vector3
      */
     public Vector3 normalize() {
-        return this.clone().div(this.magnitude());
+        double mag = this.magnitude();
+        //double mag = Vector3.Dot(this,new Vector3());
+        if (mag>0) {
+            double invmag = 1 / mag;
+            return this.clone().mul(invmag);
+        }
+        return this;
     }
 
     /**

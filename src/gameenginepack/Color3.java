@@ -21,7 +21,7 @@ public class Color3 {
             Decimal=meh;
         }*/
 
-        {float Result = (Decimal.floatValue())/16;
+        {float Result = (Decimal.floatValue())*0.0625f;
         short meh = (short) Result;
         float Rest = Result-meh;
         if (Rest>0) {
@@ -31,7 +31,7 @@ public class Color3 {
         }
         Decimal=meh;
         }
-        {float Result = (Decimal.floatValue())/16;
+        {float Result = (Decimal.floatValue())*0.0625f;
         short meh = (short) Result;
         float Rest = Result-meh;
         if (Rest>0) {

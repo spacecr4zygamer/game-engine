@@ -11,8 +11,7 @@ public class Color3 {
             White = new Color3(255,255,255),
             Black = new Color3(0,0,0);
 
-    public static String getHex(Number Decimal) {
-        StringBuilder sb = new StringBuilder("");
+    public static String getHex(short Decimal) {
         /*while (Decimal.shortValue() > 0) {
             float Result = (Decimal.floatValue())/16;
             short meh = (short) Result;
@@ -20,28 +19,29 @@ public class Color3 {
             sb.append(Converts[(int) (Rest*16)]);
             Decimal=meh;
         }*/
-
-        {float Result = (Decimal.floatValue())*0.0625f;
-        short meh = (short) Result;
-        float Rest = Result-meh;
+        String resultstring = "";
+        String resultone;
+        {
+            int LeftOver = Math.floorDiv(Decimal,16);
+            int Rest = Math.floorMod(Decimal,16);
+            Decimal=(short) LeftOver;
         if (Rest>0) {
-            sb.append(Converts[(int) (Rest * 16)]);
+            //sb.append(Converts[(int) (Rest * 16)]);
+            resultone = Converts[Rest];
         } else {
-            sb.append(Converts[0]);
+            //sb.append(Converts[0]);
+            resultone = "0";}
         }
-        Decimal=meh;
+        {
+            int Rest = Math.floorMod(Decimal, 16);
+            if (Rest > 0) {
+                resultstring = resultstring + "" + Converts[Rest];
+            } else {
+                resultstring = resultstring + "0";
+            }
         }
-        {float Result = (Decimal.floatValue())*0.0625f;
-        short meh = (short) Result;
-        float Rest = Result-meh;
-        if (Rest>0) {
-            sb.append(Converts[(int) (Rest * 16)]);
-        } else {
-            sb.append(Converts[0]);
-        }}
-
-        sb.reverse();
-        return sb.toString();
+        resultstring = resultstring+""+resultone;
+        return resultstring;
     }
 
     public String encodetoHex() {

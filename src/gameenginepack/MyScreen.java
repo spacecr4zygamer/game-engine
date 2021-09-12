@@ -385,10 +385,21 @@ end
     }
 
 
+    private float oldtime = 0;
+
     @Override
     public void onDraw(Graphics2D g2d) {
 
+        float newtime = System.nanoTime();
+        float delta = newtime - oldtime;
+        oldtime = newtime;
+        //System.out.println("%.50f".formatted(newtime)+"|"+delta*0.0001);
+        float FPS = 1 / (delta * 0.000000001f);
+
         if (getScreenFactory().getGame().RenderType == Gamestates.TwoD) {
+
+
+
 
             //System.out.println("Drawing");
             // Camera
@@ -501,7 +512,7 @@ end
                     //System.out.println(result);
 
                     if (result >= 0) {
-                        g2d.setColor(Color.decode(Color3.Lerp(Color3.White,Color3.Black,result / 10).encodetoHex()));
+                        g2d.setColor(Color.decode(Color3.Lerp(Color3.White,Color3.Black,result * 0.1).encodetoHex()));
                         //g2d.setColor(Color.blue);
                         g2d.fillRect(x, y, 1, 1);
                     } else {
@@ -521,5 +532,11 @@ end
             g2d.drawString("Player Position: " + Math.round(Origin.Position.x) + " / " + Math.round(Origin.Position.y)+ " / "+ Math.round(Origin.Position.z), 5, 412);
             g2d.drawRect(3, 400, 165, 15);
         }
+
+        g2d.setColor(Color.white);
+        g2d.fillRect(3, 100, 165, 15);
+        g2d.setColor(Color.black);
+        g2d.drawString(""+FPS,5,112);
+        g2d.drawRect(3, 100, 165, 15);
     }
 }

@@ -5,7 +5,31 @@ public class MyGame {
 	private Game game;
 	
 	public MyGame() {
-		game = new Game(800,600, "My Game",Gamestates.ThreeD);
+
+
+//		System.out.println(Math.floorMod(168,16));
+//		System.out.println(Math.floorDiv(168,16));
+//		System.out.println(168%16);
+//		System.out.println(168f*0.0625)
+
+		MatrixTwoD a = new MatrixTwoD(5,5);
+		MatrixTwoD b = MatrixTwoD.Angles(-40);
+		System.out.println(a);
+		System.out.println(b);
+
+
+		System.out.println(a.mul(b));
+
+
+		game = new Game(800,600, "My Game",Gamestates.TwoD);
+
+		//System.out.println(1f/2);
+
+
+
+//		for (int i=0;i<65;i++) {
+//			System.out.println(i+" "+Math.floorMod(i, 16));
+//		}
 
 		//Vector3 m = new Vector3(5,2,3), n = new Vector3(0,3,1);
 

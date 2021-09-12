@@ -30,7 +30,7 @@ public class Matrice {
 
     public double getValue(int Pos) {return this.Inside[Pos];}
 
-    public void setValue(int X,int Y,int v) {
+    public void setValue(int X,int Y,double v) {
         this.Inside[X+Y*SizeX] = v;
     }
 
@@ -47,6 +47,22 @@ public class Matrice {
                 System.out.print("\n");
             }
         }
+    }
+
+    public Matrice transpose() {
+        Matrice result = new Matrice(this.SizeY,this.SizeX);
+        for (int i = 0; i < this.SizeX; ++i) {
+            for (int j = 0; j < this.SizeY; ++j) {
+                result.setValue(i,j,this.getValue(j,i));
+            }
+        }
+        return result;
+    }
+
+    public Matrice inverse() {
+        Matrice result = new Matrice(this.getSizeX(),this.getSizeY());
+        //TODO Make inversion
+        return result;
     }
 
     public Matrice add(Matrice other) {

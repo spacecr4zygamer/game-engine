@@ -8,6 +8,14 @@ public class CFrame {
     public Vector3 RightVector = new Vector3(0, 0, 1);
     public Vector3 UpVector = new Vector3(0, 1, 0);
 
+    /*
+    Representation Matrix:
+    m11,    m12,    m13,    mx
+    m21,    m22,    m23,    my
+    m31,    m32,    m33,    mz
+    0,      0,      0,      1
+     */
+
     public CFrame(double x, double y, double z, double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33) {
         //System.out.println("This one???"+x+" "+y+" "+z);
         this.Position = new Vector3(x, y, z);

@@ -13,9 +13,10 @@ public class Game {
 	private final JFrame window = new JFrame("Game Engine");
 	private final ScreenFactory screenFactory;
 	private final Keyboardlistener keyboardlistener;
-	private final Mousepadlistener mousepadlistener;
+	private final Mousepadlistener mouselistener;
 	public final Enum RenderType;
 	private JPanel Explorer;
+	private final JDialog jDialog = new JDialog();
 	
 	public Game(int windowX, int windowY, String title,Enum VersionD) {
 
@@ -38,8 +39,22 @@ public class Game {
 		screenFactory = new ScreenFactory(this);
 		Taskscheduler taskthread = new Taskscheduler(this);
 		keyboardlistener = new Keyboardlistener();
-		mousepadlistener = new Mousepadlistener();
-		
+		mouselistener = new Mousepadlistener();
+
+		//JDialog jDialog = new JDialog();
+		jDialog.setTitle("Explorer");
+		//jDialog.setModal(true);
+		jDialog.setFocusable(true);
+		jDialog.setResizable(true);
+		jDialog.setVisible(true);
+		jDialog.setSize(300,600);
+		jDialog.setLocation(1350,220);
+
+		JButton jButton = new JButton();
+		jButton.setSize(200,200);
+		jButton.setVisible(true);
+		//jDialog.setLocationRelativeTo(window);
+
 		//Explorer = new JPanel();
 		//Explorer.setBounds(500, 500, 5000, 500);
 
@@ -50,8 +65,9 @@ public class Game {
 
 		//window.add(Explorer,BorderLayout.WEST);
 		window.add(taskthread);
+		//window.add(jButton,BorderLayout.WEST);
 		window.addKeyListener(keyboardlistener);
-		window.addMouseListener(mousepadlistener);
+		window.addMouseListener(mouselistener);
 
 		screenFactory.showScreen(new MyScreen(screenFactory));
 
@@ -66,7 +82,7 @@ public class Game {
 	}
 	
 	public Mousepadlistener getMouseListener() {
-		return mousepadlistener;
+		return mouselistener;
 	}
 	
 	public Keyboardlistener getKeyBoardListener() {

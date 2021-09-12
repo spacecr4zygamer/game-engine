@@ -3,6 +3,10 @@ package gameenginepack;
 public class Vector2 {
 	public double x = 0,y = 0;
 
+	public static Vector2 UP = new Vector2(0,1);
+
+	public static Vector2 RIGHT = new Vector2(1,0);
+
 	public Vector2() {
 		this.x = 0;
 		this.y = 0;
@@ -70,7 +74,7 @@ public class Vector2 {
 		return Math.sqrt(Math.pow(this.x,2)+Math.pow(this.y,2));
 	}
 	
-	public String tostring() {
+	public String toString() {
 		return this.x+","+this.y;
 	}
 	
@@ -97,7 +101,7 @@ public class Vector2 {
 		double x = v.x*Math.cos(radian) - v.y*Math.sin(radian);
 		double y = v.x*Math.sin(radian) + v.y*Math.cos(radian);
 		
-		return new Vector2(x,y);
+		return new Vector2(Math.floor(x*1000000)*0.000001,Math.floor(y*1000000)*0.000001);
 	}
 	
 	public static Vector2 fromString(String string) {

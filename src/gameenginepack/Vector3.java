@@ -9,6 +9,10 @@ public class Vector3 {
 
     public Vector3() {}
 
+    // θ is the greek letter for theta, the verticle angle
+    // ϕ is the greek letter for phi, the horizontal angle
+
+
     /**
      * Sets only X position
      * @param x The X position

@@ -101,7 +101,7 @@ public class Vector2 {
 		double x = v.x*Math.cos(radian) - v.y*Math.sin(radian);
 		double y = v.x*Math.sin(radian) + v.y*Math.cos(radian);
 		
-		return new Vector2(Math.floor(x*1000000)*0.000001,Math.floor(y*1000000)*0.000001);
+		return new Vector2(x,y);
 	}
 	
 	public static Vector2 fromString(String string) {

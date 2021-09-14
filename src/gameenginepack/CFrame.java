@@ -98,6 +98,7 @@ public class CFrame {
         n = n.normalize();
         return v.mul(Math.cos(t)).add(n.mul(Vector3.Dot(v,n)).mul(1-Math.cos(t))).add(Vector3.Cross(n,v).mul(Math.sin(t)));
         //return v * (float)Math.Cos(t) + Vector3.Dot(v, n) * n * (1 - (float)Math.Cos(t)) + Vector3.Cross(n, v) * (float)Math.Sin(t);
+        //V * cos(t) + v:dot(n) * n * (1-cos(t)) + n:cross(v) * sin(t)
     }
 
     public static CFrame fromAxisAngle(Vector3 axis,double angle) {
@@ -161,12 +162,21 @@ public class CFrame {
     /**
      * Gets all the Components of the CFrame in the order of:
      *
-     * @return x, y, z, R01, R02, R03, R04, R05, R06, R07, R08, R09, R10, R11
+     * @return x, y, z, R01, R02, R03, R04, R05, R06, R07, R08, R09 (, R10, R11)
+     *         x, y, z, m13, m12, m11, m23, m22, m21, m33, m32, m31
      */
     public double[] getComponents() {
         return new double[]{this.Position.x, this.Position.y, this.Position.z,
                 this.BackVector.x, this.UpVector.x, this.RightVector.x,
                 this.BackVector.y, this.UpVector.y, this.RightVector.y,
                 this.BackVector.z, this.UpVector.z, this.RightVector.z};
+    }
+
+    public String toString() {
+        return String.format("%s; %s; %s; %f; %f; %f; %f; %f; %f; %f; %f",
+                this.Position.x,this.Position.y,this.Position.z,
+                this.RightVector.x,this.RightVector.y,this.RightVector.z,
+                this.UpVector.x,this.UpVector.y,this.UpVector.z,
+                this.BackVector.x,this.BackVector.y,this.BackVector.z);
     }
 }

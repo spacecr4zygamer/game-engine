@@ -12,13 +12,27 @@ public class MyGame {
 //		System.out.println(168%16);
 //		System.out.println(168f*0.0625)
 
-		MatrixTwoD a = new MatrixTwoD(5,5);
-		MatrixTwoD b = MatrixTwoD.Angles(-40);
-		System.out.println(a);
-		System.out.println(b);
-
-
-		System.out.println(a.mul(b));
+//		MatrixTwoD a = new MatrixTwoD(0,0);
+//		MatrixTwoD b = MatrixTwoD.Angles(45);
+//
+//		CFrame ac = new CFrame(5,5,5);
+//		CFrame bc = CFrame.Angles(0,Math.toRadians(90),0);
+//		System.out.println(new Vector2(-1,1).unit().toString());
+//		System.out.println(a);
+//		System.out.println(b);
+//
+//		MatrixTwoD c = a.mul(b);
+//		System.out.println(c);
+//		System.out.println(c.mul(b));
+//
+//		System.out.println(b);
+//		//System.out.println(bc);
+//		for (int i = 0; i<8;i++) {
+//			System.out.println(a);
+//			//System.out.println(ac+"<- CFrame");
+//			a = a.mul(b);
+//			//ac = ac.mul(bc);
+//		}
 
 
 		game = new Game(800,600, "My Game",Gamestates.TwoD);

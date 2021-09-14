@@ -23,6 +23,7 @@ public class MyScreen extends Screen {
     private final BasePart Player;
 
     public Vector2 Position = new Vector2();
+    public MatrixTwoD OtherPosition = new MatrixTwoD();
     public CFrame Origin;
 
     private final ArrayList<Object> _Instances = new ArrayList<>();
@@ -271,12 +272,14 @@ end
     public void onUpdate() {
         int Speed = 10;
         Vector2 CurrentSpeed = new Vector2();
+        MatrixTwoD OtherSpeed = new MatrixTwoD();
         CFrame CFSpeed = new CFrame();
         //System.out.println("Updating");
         // boolean moving = false;
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
             CurrentSpeed.x -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(-1, 0, 0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
             // moving = true;
             // this.Position.x += 20;
             // this.Player.Position.x -= 2;
@@ -285,6 +288,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_D)) {
             CurrentSpeed.x += 1;
             CFSpeed = CFSpeed.mul(new CFrame(1, 0, 0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
             // moving = true;
             // this.Position.x -= 20;
             // this.Player.Position.x += 2;
@@ -293,6 +297,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_W)) {
             CurrentSpeed.y += 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, -1));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
             // moving = true;
             // this.Position.y += 20;
             // this.Player.Position.y -= 2;
@@ -301,14 +306,23 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_S)) {
             CurrentSpeed.y -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, 1));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
             // moving = true;
             // this.Position.y -= 20;
             // this.Player.Position.y += 2;
         }
+        if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_E)) {
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(-5));
+        }
+        if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_Q)) {
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(5));
+        }
+        //System.out.println(OtherPosition);
         if (CurrentSpeed.magnitude() > 0) {
             // System.out.println(CurrentSpeed.unit().tostring());
-            System.out.println("The Current speed is: " + CFSpeed.Position.tostring());
+            //System.out.println("The Current speed is: " + CFSpeed.Position.tostring());
             Position = Position.add(CurrentSpeed.unit().mul(Speed));
+            OtherPosition = OtherPosition.mul(OtherSpeed);
             this.Origin = this.Origin.mul(CFSpeed);
         }
     }
@@ -316,8 +330,8 @@ end
     Polygon RotateRect(Vector2 Position, Vector2 Size, double angle) {
         Vector2 v1 = Position.add(Vector2.Transform(Size.mul(-0.5), angle));
         Vector2 v3 = Position.add(Vector2.Transform(Size.mul(0.5), angle));
-        Vector2 v2 = Position.add(Vector2.Transform(new Vector2(Size.x / 2, -Size.y / 2), angle));
-        Vector2 v4 = Position.add(Vector2.Transform(new Vector2(-Size.x / 2, Size.y / 2), angle));
+        Vector2 v2 = Position.add(Vector2.Transform(new Vector2(Size.x * 0.5, -Size.y * 0.5), angle));
+        Vector2 v4 = Position.add(Vector2.Transform(new Vector2(-Size.x * 0.5, Size.y * 0.5), angle));
 
         int[] xpoints = {(int) v1.x, (int) v2.x, (int) v3.x, (int) v4.x};
         int[] ypoints = {(int) v1.y, (int) v2.y, (int) v3.y, (int) v4.y};
@@ -329,7 +343,7 @@ end
         Vector2 v1 = Position.add(Vector2.Transform(Size.mul(-0.5), angle));
         Vector2 v3 = Position.add(Vector2.Transform(Size.mul(0.5), angle));
         //Vector2 v2 = Position.add(Vector2.Transform(new Vector2(Size.x/2,-Size.y/2), angle));
-        Vector2 v2 = Position.add(Vector2.Transform(new Vector2(-Size.x / 2, Size.y / 2), angle));
+        Vector2 v2 = Position.add(Vector2.Transform(new Vector2(-Size.x * 0.5, Size.y * 0.5), angle));
 
         int[] xpoints = {(int) v1.x, (int) v2.x, (int) v3.x};
         int[] ypoints = {(int) v1.y, (int) v2.y, (int) v3.y};
@@ -369,6 +383,8 @@ end
         if (d < 0) {
             return -3;
         }
+
+
 
         Vector3 Q = Origin.add(Direction.mul(d));
         if (Vector3.Dot(Vector3.Cross(Verts[1].sub(Verts[0]),Q.sub(Verts[0])),PlaneNormal) >= 0 &&
@@ -411,11 +427,17 @@ end
             g2d.drawLine(0, y / 2, x, y / 2);
             g2d.drawLine(x / 2, 0, x / 2, y);
             // System.out.println(e.height+" "+e.width);
-
+            Vector2 thisPosition = OtherPosition.getPosition();
 
             g2d.setColor(Color.getColor(this.Player.BrickColor));
-            g2d.fillRect(x / 2 - (int) this.Player.Size.x / 2, y / 2 - (int) this.Player.Size.y / 2,
-                    (int) this.Player.Size.x, (int) this.Player.Size.y);
+            //g2d.fillRect(x / 2 - (int) this.Player.Size.x / 2, y / 2 - (int) this.Player.Size.y / 2,
+              //      (int) this.Player.Size.x, (int) this.Player.Size.y);
+            g2d.fillPolygon(
+                    RotateRect(
+                            new Vector2(x*0.5,y*0.5),
+                            this.Player.Size,
+                            -Math.toDegrees(OtherPosition.getLookVector().angle())
+                    ));
 
             g2d.setColor(Color.cyan);
             g2d.fillRect(x / 2, y / 2, 1, 1);
@@ -430,9 +452,11 @@ end
 
             //System.out.println(Position.tostring());
 
+
+
             for (int i = 0; i < _Instances.size(); i++) {
                 BasePart Part = (BasePart) _Instances.get(i);
-                Vector2 DistanceVec = Part.Position.sub(Position).converttorender();
+                Vector2 DistanceVec = Part.Position.sub(thisPosition).converttorender();
                 // System.out.println(DistanceVec.tostring());
                 // System.out.println(DistanceVec.tostring()+" "+Position.tostring()+"
                 // "+Part.Position.tostring());
@@ -468,7 +492,7 @@ end
             g2d.setColor(Color.white);
             g2d.fillRect(3, y - 17, 165, 15);
             g2d.setColor(Color.black);
-            g2d.drawString("Player Position: " + Math.round(Position.x) + " / " + Math.round(Position.y), 5, y - 5);
+            g2d.drawString("Player Position: " + Math.round(OtherPosition.getPosition().x) + " / " + Math.round(OtherPosition.getPosition().y), 5, y - 5);
             g2d.drawRect(3, y - 17, 165, 15);
         } else {
 

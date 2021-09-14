@@ -22,9 +22,8 @@ public class Color3 {
         String resultstring = "";
         String resultone;
         {
-            int LeftOver = Math.floorDiv(Decimal,16);
             int Rest = Math.floorMod(Decimal,16);
-            Decimal=(short) LeftOver;
+            Decimal=(short) Math.floorDiv(Decimal,16);
         if (Rest>0) {
             //sb.append(Converts[(int) (Rest * 16)]);
             resultone = Converts[Rest];
@@ -35,12 +34,12 @@ public class Color3 {
         {
             int Rest = Math.floorMod(Decimal, 16);
             if (Rest > 0) {
-                resultstring = resultstring + "" + Converts[Rest];
+                resultstring = resultstring + Converts[Rest] + resultone;
             } else {
-                resultstring = resultstring + "0";
+                resultstring = resultstring + "0" + resultone;
             }
         }
-        resultstring = resultstring+""+resultone;
+        //resultstring = resultstring+""+resultone;
         return resultstring;
     }
 

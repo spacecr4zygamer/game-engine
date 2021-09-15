@@ -64,6 +64,7 @@ public class Game {
 		
 
 		//window.add(Explorer,BorderLayout.WEST);
+		//jDialog.add(taskthread);
 		window.add(taskthread);
 		//window.add(jButton,BorderLayout.WEST);
 		window.addKeyListener(keyboardlistener);

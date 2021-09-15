@@ -43,6 +43,7 @@ public class Taskscheduler extends JPanel implements Runnable{
 	@Override
 	public void paint(Graphics g)  {
 		//System.out.println("Painting");
+
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);

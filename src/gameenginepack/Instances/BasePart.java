@@ -19,18 +19,18 @@ public abstract class BasePart extends Instance {
 	}
 
 
-	
+
 	public BasePart(Vector2 pos,Vector2 size) {
 		this.Position = pos;
 		this.Size = size;
 	}
-	
+
 	public BasePart(Vector2 pos,Vector2 size,Color BrickColor) {
 		this.Position = pos;
 		this.Size = size;
 		this.BrickColor = BrickColor;
 	}*/
-	
+
 	//public abstract BasePart Touched();
 
 	@Override
@@ -49,17 +49,16 @@ public abstract class BasePart extends Instance {
 				this.BrickColor = Property;
 				break;
 			case "CanCollide":
-				boolean state = false;
-				if (Property.toLowerCase() == "true") {
-					state = true;
-				}
+				boolean state = Property.toLowerCase() == "true";
 				this.CanCollide = state;
 				break;
 			case "Rotation":
 				this.Rotation = Double.parseDouble(Property);
 				break;
+			default:
+				super.setProperty(PropertyName,Property);
+				break;
 		}
-		super.setProperty(PropertyName,Property);
 	}
 
 	/*@Override

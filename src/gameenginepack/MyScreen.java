@@ -415,9 +415,8 @@ end
         if (getScreenFactory().getGame().RenderType == Gamestates.TwoD) {
 
 
-
-
             //System.out.println("Drawing");
+
             // Camera
 
             // Player Showing

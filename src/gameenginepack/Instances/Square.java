@@ -32,6 +32,14 @@ public class Square extends BasePart {
 
 	private void init() {
 		this.Name = "Square";
+		Vector2 a = new Vector2(-1,1),
+				b = new Vector2(1,1),
+				c = new Vector2(-1,-1),
+				d = new Vector2(1,-1);
+		this.Vertices.add(a);
+		this.Vertices.add(b);
+		this.Vertices.add(d);
+		this.Vertices.add(c);
 	}
 
 	@Override

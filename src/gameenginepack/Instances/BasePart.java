@@ -3,7 +3,7 @@ package gameenginepack.Instances;
 import gameenginepack.Color3;
 import gameenginepack.Vector2;
 
-public abstract class BasePart extends Instance {
+public abstract class BasePart extends Geomotry2D {
 
 	public Vector2 Position = new Vector2(0,0);
 	public boolean Shown = true;

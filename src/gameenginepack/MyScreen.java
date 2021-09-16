@@ -1,6 +1,7 @@
 package gameenginepack;
 
 import gameenginepack.Instances.BasePart;
+import gameenginepack.Instances.Camera2D;
 import gameenginepack.Instances.Instance;
 import gameenginepack.Instances.Square;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,8 @@ public class MyScreen extends Screen {
     public Vector2 Position = new Vector2();
     public MatrixTwoD OtherPosition = new MatrixTwoD();
     public CFrame Origin;
+
+    public Camera2D camera = new Camera2D();
 
     private final ArrayList<Object> _Instances = new ArrayList<>();
 
@@ -332,11 +335,29 @@ end
         Vector2 v3 = Position.add(Vector2.Transform(Size.mul(0.5), angle));
         Vector2 v2 = Position.add(Vector2.Transform(new Vector2(Size.x * 0.5, -Size.y * 0.5), angle));
         Vector2 v4 = Position.add(Vector2.Transform(new Vector2(-Size.x * 0.5, Size.y * 0.5), angle));
+        //Vector2 v1 = Ot
 
         int[] xpoints = {(int) v1.x, (int) v2.x, (int) v3.x, (int) v4.x};
         int[] ypoints = {(int) v1.y, (int) v2.y, (int) v3.y, (int) v4.y};
 
         return new Polygon(xpoints, ypoints, 4);
+    }
+
+    Polygon RotatePolygon(MatrixTwoD CFrame, ArrayList<Vector2> Vertices,Vector2 Size, double theta) {
+        int[] xpoints= new int[Vertices.size()];
+        int[] ypoints= new int[Vertices.size()];
+
+        MatrixTwoD ACFrame = camera.CFrame.mul(CFrame);
+
+        int c = 0;
+        for (Vector2 Vertice: Vertices) {
+            Vector2 WorldPosition = ACFrame.mul(Vertice.mul(Size.mul(0.5)));
+            xpoints[c]= (int) WorldPosition.x;
+            ypoints[c]= (int) WorldPosition.y;
+            c++;
+        }
+
+        return new Polygon(xpoints,ypoints,Vertices.size());
     }
 
     Polygon RotateTris(Vector2 Position, Vector2 Size, double angle) {
@@ -415,9 +436,12 @@ end
         if (getScreenFactory().getGame().RenderType == Gamestates.TwoD) {
 
 
+
+
             //System.out.println("Drawing");
 
             // Camera
+            camera.CFrame = OtherPosition;
 
             // Player Showing
             Rectangle e = g2d.getClipBounds();
@@ -435,7 +459,7 @@ end
                     RotateRect(
                             new Vector2(x*0.5,y*0.5),
                             this.Player.Size,
-                            -Math.toDegrees(OtherPosition.getLookVector().angle())
+                            -Math.toDegrees(0)
                     ));
 
             g2d.setColor(Color.cyan);
@@ -464,10 +488,11 @@ end
                 // Vector2 relative = Position.add(DistanceVec);
                 // Vector2 relative = Position.add();
 
-                Vector2 screenoffset = new Vector2(x / 2, y / 2);
+                Vector2 screenoffset = new Vector2(x * 0.5, y * 0.5);
                 Polygon partrotated;
                 if (Part instanceof Square) {
-                    partrotated = RotateRect(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
+                    //partrotated = RotateRect(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
+                    partrotated = RotatePolygon(Part.CFrame,Part.Vertices,Part.Size,Part.CFrame.getAngle());
                 } else {
                     partrotated = RotateTris(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
                 }

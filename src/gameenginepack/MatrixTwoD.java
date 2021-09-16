@@ -141,6 +141,19 @@ public class MatrixTwoD {
         return new double[]{components[2], components[5], components[0], components[1], components[3], components[4]};
     }
 
+    public MatrixTwoD inverse() {
+
+        double[] a = this.getComponents();
+        double ax = a[0], ay = a[1], a11 = a[2], a12 = a[3], a21 = a[4], a22 = a[5];
+
+        double det = a11*a22*1+a12*ay*0+ax*a21*0-0*a22*ax-0*ay*a11-1*a21*a12;
+        System.out.println(det);
+        if (det==0) {return null;}
+
+
+        return new MatrixTwoD();
+    }
+
     public String toString() {
         return String.format("Pos(X: %s; Y: %s); Look(X: %f; Y: %f); Up(X: %f; Y: %f)",
                 components[2], components[5],

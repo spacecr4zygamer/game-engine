@@ -34,11 +34,14 @@ public class MyGame {
 //			//ac = ac.mul(bc);
 //		}
 
+
 		MatrixTwoD a = MatrixTwoD.Angles(45);
 		Vector2 b = new Vector2(1,2);
 		System.out.println(a);
 		System.out.println(a.mul(b));
 
+		MatrixTwoD e = a.inverse();
+		System.out.println(a.mul(e));
 
 		game = new Game(800,600, "My Game",Gamestates.TwoD);
 

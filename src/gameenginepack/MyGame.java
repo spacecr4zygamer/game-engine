@@ -41,6 +41,9 @@ public class MyGame {
 		System.out.println(a.mul(b));
 
 		MatrixTwoD e = a.inverse();
+		MatrixTwoD test = new MatrixTwoD(5,3).mul(MatrixTwoD.Angles(45));
+		System.out.println("This: "+test);
+		System.out.println("This inv: "+test.inverse());
 		System.out.println(a.mul(e));
 
 		game = new Game(800,600, "My Game",Gamestates.TwoD);

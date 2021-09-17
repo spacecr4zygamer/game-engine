@@ -443,6 +443,8 @@ end
             // Camera
             camera.CFrame = OtherPosition;
 
+            OtherPosition.inverse();
+
             // Player Showing
             Rectangle e = g2d.getClipBounds();
             int x = e.width, y = e.height;

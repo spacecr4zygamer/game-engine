@@ -149,16 +149,22 @@ public class MatrixTwoD {
 //        };
 //    }
 
+    public void setPosition(Vector2 Position) {
+        this.components[2] = Position.x;
+        this.components[5] = Position.y;
+    }
+
     public MatrixTwoD inverse() {
         double[] a = this.getComponents();
         double ax = a[0], ay = a[1], a11 = a[2], a12 = a[3], a21 = a[4], a22 = a[5];
 
-        double det = a11 * a22 * 1 + a12 * ay * 0 + ax * a21 * 0 - 0 * a22 * ax - 0 * ay * a11 - 1 * a21 * a12;
-        //double det = a11 * a22 - a21 * a12;
-        System.out.println(det);
-        if (det == 0) {
-            return null;
-        }
+        //double det = a11 * a22 * 1 + a12 * ay * 0 + ax * a21 * 0 - 0 * a22 * ax - 0 * ay * a11 - 1 * a21 * a12;
+        double det = a11 * a22 - a21 * a12;
+
+//        System.out.println(det==det2);
+//        if (det == 0) {
+//            return null;
+//        }
         double idet = 1 / det;
         //double a = 11, b = a12, c = ax, d = a21, e = a22, f = ay, g = 0, h = 0, i = 1;
         /*double m11 = e * i - f * h, m12 = c * h - b * i, m13 = b * f - c * e,
@@ -167,19 +173,19 @@ public class MatrixTwoD {
         double m11 = a22 * 1 - ay * 0, m12 = ax * 0 - a12 * 1, m13 = a12 * ay - ax * a22,
                 m21 = ay * 0 - a21 * 1, m22 = a11 * 1 - a22 * 0, m23 = ax * a21 - a11 * ay,
                 m31 = a21 * 0 - a22 * 0, m32 = a12 * 0 - a11 * 0, m33 = a11 * a22 - a12 * a21;*/
-        double m11 =idet*(a22 * 1 - ay * 0),m12 =idet*(ax * 0 - a12 * 1), m13 =idet*( a12 * ay - ax * a22),
+        /*double m11 =idet*(a22 * 1 - ay * 0),m12 =idet*(ax * 0 - a12 * 1), m13 =idet*( a12 * ay - ax * a22),
                 m21 =idet*( ay * 0 - a21 * 1), m22 =idet*( a11 * 1 - a22 * 0), m23 =idet*( ax * a21 - a11 * ay),
-                m31 =idet*( a21 * 0 - a22 * 0), m32 =idet*( a12 * 0 - a11 * 0), m33 =idet*( a11 * a22 - a12 * a21);
-        /*double m11 = idet * a22, m12 = idet * a12, mx = idet * (a12 * ay - ax * a22),
-                m21 = idet * a21, m22 = idet * a11, my = idet * (ax * a21 - a11 * ay),
-                m31 = 0, m32 = 0, m33 = idet * (a11 * a22 - a12 * a21);*/
-        System.out.println(m11+" "+m12+" "+m13+"\n"+m21+" "+m22+" "+m23+"\n"+m31+" "+m32+" "+m33);
+                m31 =idet*( a21 * 0 - a22 * 0), m32 =idet*( a12 * 0 - a11 * 0), m33 =idet*( a11 * a22 - a12 * a21);*/
+        double m11 = idet * a22, m12 = idet * a12, mx = idet * (a12 * ay - ax * a22),
+                m21 = idet * a21, m22 = idet * a11, my = idet * (ax * a21 - a11 * ay);
+                /*m31 = 0, m32 = 0, m33 = idet * (a11 * a22 - a12 * a21);*/
+        //System.out.println(m11+" "+m12+" "+m13+"\n"+m21+" "+m22+" "+m23+"\n"+m31+" "+m32+" "+m33);
         //System.out.println("This is : "+m33);
-        if (m33!=1) {
+        /*if (m33!=1) {
             System.out.println("ITS NOT 1 REEEEEEEEEEEEEEEEEEE");
-        }
+        }*/
         //return new MatrixTwoD(mx,my,m11,m12,m21,m22);
-        return new MatrixTwoD();
+        return new MatrixTwoD(mx,my,m11,m12,m21,m22);
     }
 
     public String toString() {

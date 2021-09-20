@@ -5,12 +5,12 @@ import gameenginepack.Vector2;
 
 public abstract class BasePart extends Geomotry2D {
 
-	public Vector2 Position = new Vector2(0,0);
+	//public Vector2 Position = new Vector2(0,0);
 	public boolean Shown = true;
-	public double Rotation = 0;
+	//public double Rotation = 0;
 	public String BrickColor = "gray";
 	public Color3 Color = new Color3(145,145,145);
-	public Vector2 Size = new Vector2(40,20);
+	//public Vector2 Size = new Vector2(40,20);
 	public Vector2 Velocity = new Vector2(0,0);
 	public boolean CanCollide = false;
 	
@@ -37,10 +37,10 @@ public abstract class BasePart extends Geomotry2D {
 	public void setProperty(String PropertyName, String Property) {
 		switch(PropertyName) {
 			case "Position":
-				this.Position = Vector2.fromString(Property);
+				setPosition(Vector2.fromString(Property));
 				break;
 			case "Size":
-				this.Size = Vector2.fromString(Property);
+				this.setSize(Vector2.fromString(Property));
 				break;
 			case "Velocity":
 				this.Velocity = Vector2.fromString(Property);
@@ -52,9 +52,9 @@ public abstract class BasePart extends Geomotry2D {
 				boolean state = Property.toLowerCase() == "true";
 				this.CanCollide = state;
 				break;
-			case "Rotation":
-				this.Rotation = Double.parseDouble(Property);
-				break;
+//			case "Rotation":
+//				this.Rotation = Double.parseDouble(Property);
+//				break;
 			default:
 				super.setProperty(PropertyName,Property);
 				break;

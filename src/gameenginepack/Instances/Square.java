@@ -2,6 +2,8 @@ package gameenginepack.Instances;
 
 import gameenginepack.Vector2;
 
+import java.util.ArrayList;
+
 public class Square extends BasePart {
 
 	public Square() {
@@ -11,23 +13,24 @@ public class Square extends BasePart {
 	
 	public Square(Vector2 pos) {
 		//super("BasePart");
-		this.Position = pos;
 		init();
+		this.setPosition(pos);
 	}
 	
 	public Square(Vector2 pos,Vector2 size) {
 		//super("BasePart");
-		this.Position = pos;
-		this.Size = size;
 		init();
+		this.setPosition(pos);
+		this.setSize(size);
 	}
 	
 	public Square(Vector2 pos,Vector2 size,String BrickColor) {
 		//super("BasePart");
-		this.Position = pos;
-		this.Size = size;
-		this.BrickColor = BrickColor;
 		init();
+		this.setPosition(pos);
+		this.setSize(size);
+		this.BrickColor = BrickColor;
+
 	}
 
 	private void init() {
@@ -36,10 +39,12 @@ public class Square extends BasePart {
 				b = new Vector2(1,1),
 				c = new Vector2(-1,-1),
 				d = new Vector2(1,-1);
-		this.Vertices.add(a);
-		this.Vertices.add(b);
-		this.Vertices.add(d);
-		this.Vertices.add(c);
+		ArrayList<Vector2> Verts = new ArrayList<Vector2>(4);
+		Verts.add(0,a);
+		Verts.add(1,b);
+		Verts.add(2,d);
+		Verts.add(3,c);
+		this.setVertices(Verts);
 	}
 
 	@Override

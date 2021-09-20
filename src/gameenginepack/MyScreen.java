@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.lang.model.util.Elements;
+import javax.print.attribute.standard.MediaSize;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class MyScreen extends Screen {
 
-    private final BasePart Player;
+    private final Square Player;
 
     public Vector2 Position = new Vector2();
     public MatrixTwoD OtherPosition = new MatrixTwoD();
@@ -372,6 +373,10 @@ end
         return new Polygon(xpoints, ypoints, 3);
     }
 
+    MatrixTwoD getWorldToCamera(MatrixTwoD CFrame) {
+        return new MatrixTwoD();
+    }
+
     private double intersect_Line_Triangle(Vector3 Origin, Vector3 Direction, Vector3 PlaneNormal, Vector3 Plane, Vector3[] Verts) {
         /*
         if PlaneN:Dot(LineD.unit) == 0 then return nil end
@@ -442,8 +447,9 @@ end
 
             // Camera
             camera.CFrame = OtherPosition;
+            Player.setCFrame(OtherPosition);
 
-            OtherPosition.inverse();
+            //OtherPosition.inverse();
 
             // Player Showing
             Rectangle e = g2d.getClipBounds();
@@ -460,7 +466,7 @@ end
             g2d.fillPolygon(
                     RotateRect(
                             new Vector2(x*0.5,y*0.5),
-                            this.Player.Size,
+                            this.Player.getSize(),
                             -Math.toDegrees(0)
                     ));
 
@@ -481,7 +487,7 @@ end
 
             for (int i = 0; i < _Instances.size(); i++) {
                 BasePart Part = (BasePart) _Instances.get(i);
-                Vector2 DistanceVec = Part.Position.sub(thisPosition).converttorender();
+                Vector2 DistanceVec = Part.getPosition().sub(thisPosition).converttorender();
                 // System.out.println(DistanceVec.tostring());
                 // System.out.println(DistanceVec.tostring()+" "+Position.tostring()+"
                 // "+Part.Position.tostring());
@@ -490,13 +496,16 @@ end
                 // Vector2 relative = Position.add(DistanceVec);
                 // Vector2 relative = Position.add();
 
+                MatrixTwoD offset = OtherPosition.inverse().mul(Part.getCFrame());
+                MatrixTwoD screenCFrame = OtherPosition.mul(MatrixTwoD.Angles(OtherPosition.getAngle())).mul(offset);
+
                 Vector2 screenoffset = new Vector2(x * 0.5, y * 0.5);
                 Polygon partrotated;
                 if (Part instanceof Square) {
                     //partrotated = RotateRect(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
-                    partrotated = RotatePolygon(Part.CFrame,Part.Vertices,Part.Size,Part.CFrame.getAngle());
+                    partrotated = RotatePolygon(screenCFrame,Part.getVertices(),Part.getSize(),Part.getRotation());
                 } else {
-                    partrotated = RotateTris(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
+                    partrotated = RotateTris(screenoffset.add(DistanceVec), Part.getSize(), Part.getRotation());
                 }
                 Color color;
                 try {

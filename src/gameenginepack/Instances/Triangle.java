@@ -10,19 +10,19 @@ public class Triangle extends BasePart {
 	
 	public Triangle(Vector2 pos) {
 		//super("BasePart");
-		this.Position = pos;
+		this.setPosition(pos);
 	}
 	
 	public Triangle(Vector2 pos,Vector2 size) {
 		//super("BasePart");
-		this.Position = pos;
-		this.Size = size;
+		this.setPosition(pos);
+		this.setSize(size);
 	}
 	
 	public Triangle(Vector2 pos,Vector2 size,String BrickColor) {
 		//super("BasePart");
-		this.Position = pos;
-		this.Size = size;
+		this.setPosition(pos);
+		this.setSize(size);
 		this.BrickColor = BrickColor;
 	}
 

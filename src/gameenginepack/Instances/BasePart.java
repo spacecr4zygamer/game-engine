@@ -52,9 +52,9 @@ public abstract class BasePart extends Geomotry2D {
 				boolean state = Property.toLowerCase() == "true";
 				this.CanCollide = state;
 				break;
-//			case "Rotation":
-//				this.Rotation = Double.parseDouble(Property);
-//				break;
+			case "Rotation":
+				this.setOrientation(Double.parseDouble(Property));
+				break;
 			default:
 				super.setProperty(PropertyName,Property);
 				break;

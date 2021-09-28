@@ -26,11 +26,13 @@ public class Taskscheduler extends JPanel implements Runnable{
 			try {
 				if (game.getScreenFactory().getCurrentScreen()!=null) {
 					game.getScreenFactory().getCurrentScreen().onUpdate();
-					Thread.sleep(10);
+					repaint();
+					Thread.sleep(16);
 					//System.out.println(game.getWindow().getGraphics().create());
 					//paint(game.getWindow).getGraphics().create(200,200,800,600));
 					//paint(graphic);
 					//Thread.sleep(9);
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -50,7 +52,7 @@ public class Taskscheduler extends JPanel implements Runnable{
 		if (game.getScreenFactory().getCurrentScreen()!=null) {
 			game.getScreenFactory().getCurrentScreen().onDraw(g2d);
 		}
-		repaint();
+		//repaint();
 		//repaint();
 	}
 	

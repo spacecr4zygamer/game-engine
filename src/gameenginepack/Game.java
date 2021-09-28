@@ -26,7 +26,7 @@ public class Game {
 		window.setSize(windowX,windowY);
 		window.setLayout(new BorderLayout());
 		System.out.println(window.getLayout());
-		window.setResizable(false);
+		window.setResizable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setFocusable(true);
 		window.setLocationRelativeTo(null);

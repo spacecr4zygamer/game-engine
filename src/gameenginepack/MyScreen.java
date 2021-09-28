@@ -1,9 +1,6 @@
 package gameenginepack;
 
-import gameenginepack.Instances.BasePart;
-import gameenginepack.Instances.Camera2D;
-import gameenginepack.Instances.Instance;
-import gameenginepack.Instances.Square;
+import gameenginepack.Instances.*;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -135,7 +132,8 @@ public class MyScreen extends Screen {
 
         System.out.println("Creating!");
 
-
+        _Instances.add(new Square(new Vector2(0,0),new Vector2(40,20)));
+        _Instances.add(new Triangle(new Vector2(50,10), new Vector2(30,30),"red"));
         ReadWorldData("WorldData/World.xml");
 
 //		for (Instance child: getScreenFactory().getGame().getWorkspace().GetChildren()) {
@@ -283,7 +281,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
             CurrentSpeed.x -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(-1, 0, 0));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
             // moving = true;
             // this.Position.x += 20;
             // this.Player.Position.x -= 2;
@@ -292,7 +290,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_D)) {
             CurrentSpeed.x += 1;
             CFSpeed = CFSpeed.mul(new CFrame(1, 0, 0));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
             // moving = true;
             // this.Position.x -= 20;
             // this.Player.Position.x += 2;
@@ -301,7 +299,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_W)) {
             CurrentSpeed.y += 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, -1));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
             // moving = true;
             // this.Position.y += 20;
             // this.Player.Position.y -= 2;
@@ -310,16 +308,17 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_S)) {
             CurrentSpeed.y -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, 1));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
             // moving = true;
             // this.Position.y -= 20;
             // this.Player.Position.y += 2;
         }
+
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_E)) {
-            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(-5));
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(5));
         }
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_Q)) {
-            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(5));
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(-5));
         }
         //System.out.println(OtherPosition);
         if (CurrentSpeed.magnitude() > 0) {
@@ -373,9 +372,24 @@ end
         return new Polygon(xpoints, ypoints, 3);
     }
 
-    MatrixTwoD getWorldToCamera(MatrixTwoD CFrame) {
-        return new MatrixTwoD();
+    double screensizex,screensizey;
+
+    Polygon MakePolygon(ArrayList<Vector2> Vertices,double angle) {
+        int[] xpoints = new int[Vertices.size()];
+        int[] ypoints = new int[Vertices.size()];
+        int c=0;
+        for (Vector2 Vertice : Vertices) {
+            Vector2 screenVertice = Vector2.Transform(Vertice.sub(camera.CFrame.getPosition()),Math.toDegrees(angle));
+            xpoints[c]= (int) (screenVertice.x+screensizex*0.5);
+            ypoints[c]= (int) (screenVertice.y+screensizey*0.5);
+            c++;
+        }
+        return new Polygon(xpoints,ypoints,Vertices.size());
     }
+
+    /*MatrixTwoD getWorldToCamera(MatrixTwoD CFrame) {
+        return new MatrixTwoD();
+    }*/
 
     private double intersect_Line_Triangle(Vector3 Origin, Vector3 Direction, Vector3 PlaneNormal, Vector3 Plane, Vector3[] Verts) {
         /*
@@ -448,12 +462,14 @@ end
             // Camera
             camera.CFrame = OtherPosition;
             Player.setCFrame(OtherPosition);
+            //System.out.println(camera.CFrame.ToObjectSpace(Player.getCFrame()));
 
             //OtherPosition.inverse();
 
             // Player Showing
             Rectangle e = g2d.getClipBounds();
             int x = e.width, y = e.height;
+            screensizex=x;screensizey=y;
             g2d.setColor(Color.green);
             g2d.drawLine(0, y / 2, x, y / 2);
             g2d.drawLine(x / 2, 0, x / 2, y);
@@ -463,12 +479,15 @@ end
             g2d.setColor(Color.getColor(this.Player.BrickColor));
             //g2d.fillRect(x / 2 - (int) this.Player.Size.x / 2, y / 2 - (int) this.Player.Size.y / 2,
               //      (int) this.Player.Size.x, (int) this.Player.Size.y);
+//            g2d.fillPolygon(
+//                    RotateRect(
+//                            new Vector2(x*0.5,y*0.5),
+//                            this.Player.getSize(),
+//                            -Math.toDegrees(0)
+//                    ));
             g2d.fillPolygon(
-                    RotateRect(
-                            new Vector2(x*0.5,y*0.5),
-                            this.Player.getSize(),
-                            -Math.toDegrees(0)
-                    ));
+                    MakePolygon(Player.getVertices(),-camera.CFrame.getAngle())
+            );
 
             g2d.setColor(Color.cyan);
             g2d.fillRect(x / 2, y / 2, 1, 1);
@@ -487,7 +506,7 @@ end
 
             for (int i = 0; i < _Instances.size(); i++) {
                 BasePart Part = (BasePart) _Instances.get(i);
-                Vector2 DistanceVec = Part.getPosition().sub(thisPosition).converttorender();
+                //
                 // System.out.println(DistanceVec.tostring());
                 // System.out.println(DistanceVec.tostring()+" "+Position.tostring()+"
                 // "+Part.Position.tostring());
@@ -496,16 +515,21 @@ end
                 // Vector2 relative = Position.add(DistanceVec);
                 // Vector2 relative = Position.add();
 
-                MatrixTwoD offset = OtherPosition.inverse().mul(Part.getCFrame());
-                MatrixTwoD screenCFrame = OtherPosition.mul(MatrixTwoD.Angles(OtherPosition.getAngle())).mul(offset);
+                //MatrixTwoD offset = OtherPosition.inverse().mul(Part.getCFrame());
+                //MatrixTwoD screenCFrame = OtherPosition.mul(MatrixTwoD.Angles(OtherPosition.getAngle())).mul(offset);
 
-                Vector2 screenoffset = new Vector2(x * 0.5, y * 0.5);
+                //Vector2 screenoffset = new Vector2(x * 0.5, y * 0.5);
                 Polygon partrotated;
                 if (Part instanceof Square) {
                     //partrotated = RotateRect(screenoffset.add(DistanceVec), Part.Size, Part.Rotation);
-                    partrotated = RotatePolygon(screenCFrame,Part.getVertices(),Part.getSize(),Part.getRotation());
+                    //partrotated = RotatePolygon(screenCFrame,Part.getVertices(),Part.getSize(),Part.getRotation());
+                    partrotated = MakePolygon(Part.getVertices(),-camera.CFrame.getAngle());
                 } else {
-                    partrotated = RotateTris(screenoffset.add(DistanceVec), Part.getSize(), Part.getRotation());
+                    //Vector2 DistanceVec = Part.getPosition().sub(thisPosition).converttorender();
+                    //partrotated = RotateTris(screenoffset.add(DistanceVec), Part.getSize(), Part.getRotation());
+                    partrotated = MakePolygon(Part.getVertices(),-camera.CFrame.getAngle());
+                    //System.out.println(Part.getVertices().size());
+                    //System.out.println("Triangle exists?");
                 }
                 Color color;
                 try {
@@ -535,7 +559,9 @@ end
 
             //CFrame Origin = new CFrame(0,0,0);
             //Origin = new Vector3(-1,0,0)
-            int max_x = 800, max_y = 600;
+            //int max_x = 800, max_y = (int)  ;
+            Rectangle e = g2d.getClipBounds();
+            int max_x = e.width, max_y = e.height;
 
             //this.Origin = new CFrame(this.Origin.Position,a);//Origin.mul(CFrame.Angles(0,Math.toRadians(10),0));
             Origin = Origin.mul(CFrame.Angles(0,Math.toRadians(10),0));

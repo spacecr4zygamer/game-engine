@@ -17,7 +17,7 @@ public abstract class Geomotry2D extends Instance {
             int c = 0;
             this.Vertices.clear();
             for (Vector2 Vertice : this.OriginalVertices) {
-                this.Vertices.add(c, this.CFrame.mul(Vertice.mul(this.Size)));
+                this.Vertices.add(c, this.CFrame.mul(Vertice.mul(this.Size.mul(0.5))));
                 c++;
             }
         }
@@ -39,6 +39,11 @@ public abstract class Geomotry2D extends Instance {
     public void setSize(Vector2 newSize) {
         Size = newSize;
         UpdateVertices();
+    }
+
+    public void setOrientation(double angle) {
+        CFrame.setOrientation(angle);
+        this.UpdateVertices();
     }
 
     public ArrayList<Vector2> getOriginalVertices() {

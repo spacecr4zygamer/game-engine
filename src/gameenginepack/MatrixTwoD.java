@@ -31,6 +31,14 @@ public class MatrixTwoD {
         };
     }
 
+    public MatrixTwoD(Vector2 Position) {
+        components = new double[]{
+                1, 0, Position.x,
+                0, 1, Position.y,
+                //0,0,1
+        };
+    }
+
     //public MatrixTwoD(Vector2 up, Vector2 look) {
     //    components = new double[]{up.x,look.x,0,up.y,look.y,0,0,0,1};
     //}
@@ -111,6 +119,14 @@ public class MatrixTwoD {
         //System.out.println(upvector+", "+lookvector);
         //System.out.println(lookvector);
         return new MatrixTwoD(cos, -sin, sin, cos);
+    }
+
+    public static MatrixTwoD LookAt(Vector2 Origin, Vector2 Position) {
+        MatrixTwoD Result = new MatrixTwoD(Origin);
+
+        MatrixTwoD Other = MatrixTwoD.Angles(-Math.toDegrees(Position.sub(Origin).angle())+90);
+
+        return Result.mul(Other);
     }
 
     public double getAngle() {

@@ -2,7 +2,7 @@ package gameenginepack;
 
 public class MyGame {
 	
-	private Game game;
+	private final Game game;
 	
 	public MyGame() {
 
@@ -46,7 +46,11 @@ public class MyGame {
 		System.out.println("This inv: "+test.inverse());
 		System.out.println(a.mul(e));
 
+		//new Ray2D(new Vector2(0,0),new Vector2(1,0),1).cast(new Vector2(5,5),new Vector2(5,-5));
+
+
 		game = new Game(800,600, "My Game",Gamestates.TwoD);
+
 
 		//System.out.println(1f/2);
 

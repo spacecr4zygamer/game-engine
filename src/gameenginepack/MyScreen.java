@@ -1,6 +1,7 @@
 package gameenginepack;
 
 import gameenginepack.Instances.*;
+import jdk.jfr.ValueDescriptor;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -12,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -126,6 +128,9 @@ public class MyScreen extends Screen {
         }
     }*/
 
+    public Square RayTest = new Square();
+    public Square LookAtTest = new Square();
+
     @Override
     public void onCreate() {
         //bubblesort();
@@ -134,7 +139,13 @@ public class MyScreen extends Screen {
 
         _Instances.add(new Square(new Vector2(0,0),new Vector2(40,20)));
         _Instances.add(new Triangle(new Vector2(50,10), new Vector2(30,30),"red"));
+        //RayTest = new Square();
+        _Instances.add(RayTest);
+        _Instances.add(LookAtTest);
+        LookAtTest.setSize(new Vector2(100,5));
+        LookAtTest.BrickColor = "red";
         ReadWorldData("WorldData/World.xml");
+
 
 //		for (Instance child: getScreenFactory().getGame().getWorkspace().GetChildren()) {
 //			System.out.println(child);
@@ -281,7 +292,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
             CurrentSpeed.x -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(-1, 0, 0));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
             // moving = true;
             // this.Position.x += 20;
             // this.Player.Position.x -= 2;
@@ -290,7 +301,7 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_D)) {
             CurrentSpeed.x += 1;
             CFSpeed = CFSpeed.mul(new CFrame(1, 0, 0));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
             // moving = true;
             // this.Position.x -= 20;
             // this.Player.Position.x += 2;
@@ -299,7 +310,8 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_W)) {
             CurrentSpeed.y += 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, -1));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
+            //OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
             // moving = true;
             // this.Position.y += 20;
             // this.Player.Position.y -= 2;
@@ -308,17 +320,17 @@ end
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_S)) {
             CurrentSpeed.y -= 1;
             CFSpeed = CFSpeed.mul(new CFrame(0, 0, 1));
-            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
+            OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
             // moving = true;
             // this.Position.y -= 20;
             // this.Player.Position.y += 2;
         }
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_E)) {
-            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(5));
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(-5));
         }
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_Q)) {
-            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(-5));
+            OtherPosition = OtherPosition.mul(MatrixTwoD.Angles(5));
         }
         //System.out.println(OtherPosition);
         if (CurrentSpeed.magnitude() > 0) {
@@ -379,9 +391,9 @@ end
         int[] ypoints = new int[Vertices.size()];
         int c=0;
         for (Vector2 Vertice : Vertices) {
-            Vector2 screenVertice = Vector2.Transform(Vertice.sub(camera.CFrame.getPosition()),Math.toDegrees(angle));
+            Vector2 screenVertice = Vector2.Transform(Vertice.sub(camera.CFrame.getPosition()),Math.toDegrees(angle)+90);
             xpoints[c]= (int) (screenVertice.x+screensizex*0.5);
-            ypoints[c]= (int) (screenVertice.y+screensizey*0.5);
+            ypoints[c]= (int) (((screenVertice.y+screensizey*0.5)*-1)+screensizey);
             c++;
         }
         return new Polygon(xpoints,ypoints,Vertices.size());
@@ -458,10 +470,23 @@ end
 
 
             //System.out.println("Drawing");
+            //g2d.rotate(Math.toRadians(90));
+            AffineTransform test = new AffineTransform();
+            test.rotate(Math.toRadians(15));
+            //g2d.setTransform(test);
 
             // Camera
+            //camera.CFrame.setPosition(OtherPosition.getPosition());
             camera.CFrame = OtherPosition;
             Player.setCFrame(OtherPosition);
+
+            LookAtTest.setCFrame(MatrixTwoD.LookAt(Player.getPosition(),new Vector2(0,0)).mul(new MatrixTwoD(50,0)));
+
+
+            new Ray2D(Player.getPosition(),new Vector2(1,0),50).cast(new Vector2(0,50),new Vector2(0,-50));
+            RayTest.setPosition(Player.getPosition().add(new Vector2(50,0)));
+            RayTest.setSize(new Vector2(100,5));
+            //g2d.drawLine((int) Player.getPosition().x,(int) Player.getPosition().y,(int) Player.getPosition().x+25,(int) Player.getPosition().y);
             //System.out.println(camera.CFrame.ToObjectSpace(Player.getCFrame()));
 
             //OtherPosition.inverse();
@@ -549,10 +574,10 @@ end
             }
 
             g2d.setColor(Color.white);
-            g2d.fillRect(3, y - 17, 165, 15);
+            g2d.fillRect(3, y - 17, 200, 15);
             g2d.setColor(Color.black);
-            g2d.drawString("Player Position: " + Math.round(OtherPosition.getPosition().x) + " / " + Math.round(OtherPosition.getPosition().y), 5, y - 5);
-            g2d.drawRect(3, y - 17, 165, 15);
+            g2d.drawString("Player Position: X: " + Math.round(OtherPosition.getPosition().x) + " / Y: " + Math.round(OtherPosition.getPosition().y), 5, y - 5);
+            g2d.drawRect(3, y - 17, 200, 15);
         } else {
 
             // 3D Rendering

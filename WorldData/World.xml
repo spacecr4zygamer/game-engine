@@ -5,8 +5,8 @@
             <Position>50,200</Position>
             <Size>50,50</Size>
             <Velocity>0,0</Velocity>
-            <BrickColor>cyan</BrickColor>
             <CanCollide>true</CanCollide>
+            <BrickColor>cyan</BrickColor>
             <Rotation>45</Rotation>
         </Square>
         <Square>
@@ -60,25 +60,25 @@
         <Triangle>
             <Position>400,400</Position>
             <Size>20,20</Size>
-            <Rotation>0</Rotation>
+            <Rotation>90</Rotation>
             <BrickColor>black</BrickColor>
         </Triangle>
         <Triangle>
             <Position>400,-400</Position>
             <Size>20,20</Size>
-            <Rotation>90</Rotation>
+            <Rotation>0</Rotation>
             <BrickColor>black</BrickColor>
         </Triangle>
         <Triangle>
             <Position>-400,-400</Position>
             <Size>20,20</Size>
-            <Rotation>180</Rotation>
+            <Rotation>270</Rotation>
             <BrickColor>black</BrickColor>
         </Triangle>
         <Triangle>
             <Position>-400,400</Position>
             <Size>20,20</Size>
-            <Rotation>270</Rotation>
+            <Rotation>180</Rotation>
             <BrickColor>black</BrickColor>
         </Triangle>
     </Workspace>

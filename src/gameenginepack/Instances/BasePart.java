@@ -1,7 +1,7 @@
 package gameenginepack.Instances;
 
-import gameenginepack.Color3;
-import gameenginepack.Vector2;
+import gameenginepack.DataTypes.Color3;
+import gameenginepack.DataTypes.Vector2;
 
 public abstract class BasePart extends Geomotry2D {
 

@@ -1,7 +1,7 @@
 package gameenginepack.Instances;
 
-import gameenginepack.MatrixTwoD;
-import gameenginepack.Vector2;
+import gameenginepack.DataTypes.MatrixTwoD;
+import gameenginepack.DataTypes.Vector2;
 
 import java.util.ArrayList;
 

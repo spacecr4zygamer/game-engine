@@ -1,4 +1,4 @@
-package gameenginepack;
+package gameenginepack.DataTypes;
 
 public class Vector3 {
     public double x=0,y=0,z=0;

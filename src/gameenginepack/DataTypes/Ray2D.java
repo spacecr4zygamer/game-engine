@@ -1,4 +1,6 @@
-package gameenginepack;
+package gameenginepack.DataTypes;
+
+import gameenginepack.DataTypes.Vector2;
 
 public class Ray2D {
     public Vector2 Origin, Direction;

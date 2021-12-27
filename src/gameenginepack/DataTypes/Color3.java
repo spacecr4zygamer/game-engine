@@ -1,6 +1,4 @@
-package gameenginepack;
-
-import java.util.ArrayList;
+package gameenginepack.DataTypes;
 
 public class Color3 {
 

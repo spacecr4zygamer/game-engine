@@ -1,4 +1,4 @@
-package gameenginepack;
+package gameenginepack.DataTypes;
 
 public class MatrixTwoD {
 

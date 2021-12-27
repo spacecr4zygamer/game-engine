@@ -1,6 +1,4 @@
-package gameenginepack;
-
-import org.jetbrains.annotations.Nullable;
+package gameenginepack.DataTypes;
 
 public class CFrame {
     public Vector3 Position = new Vector3(0, 0, 0);

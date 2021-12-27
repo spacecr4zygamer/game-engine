@@ -1,14 +1,11 @@
 package gameenginepack;
 
+import gameenginepack.DataTypes.*;
 import gameenginepack.Instances.*;
-import jdk.jfr.ValueDescriptor;
-import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.lang.model.util.Elements;
-import javax.print.attribute.standard.MediaSize;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
@@ -283,15 +280,16 @@ end
 
     @Override
     public void onUpdate() {
-        int Speed = 10;
+        double Speed = 10;
         Vector2 CurrentSpeed = new Vector2();
         MatrixTwoD OtherSpeed = new MatrixTwoD();
         CFrame CFSpeed = new CFrame();
+
         //System.out.println("Updating");
         // boolean moving = false;
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_A)) {
             CurrentSpeed.x -= 1;
-            CFSpeed = CFSpeed.mul(new CFrame(-1, 0, 0));
+            CFSpeed = CFSpeed.mul(new CFrame(-Speed, 0, 0));
             OtherSpeed = OtherSpeed.mul(new MatrixTwoD(-Speed,0));
             // moving = true;
             // this.Position.x += 20;
@@ -300,7 +298,7 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_D)) {
             CurrentSpeed.x += 1;
-            CFSpeed = CFSpeed.mul(new CFrame(1, 0, 0));
+            CFSpeed = CFSpeed.mul(new CFrame(Speed, 0, 0));
             OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
             // moving = true;
             // this.Position.x -= 20;
@@ -309,7 +307,7 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_W)) {
             CurrentSpeed.y += 1;
-            CFSpeed = CFSpeed.mul(new CFrame(0, 0, -1));
+            CFSpeed = CFSpeed.mul(new CFrame(0, 0, -Speed));
             //OtherSpeed = OtherSpeed.mul(new MatrixTwoD(Speed,0));
             OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,Speed));
             // moving = true;
@@ -319,7 +317,7 @@ end
 
         if (this.getScreenFactory().getGame().getKeyBoardListener().isKeyPressed(KeyEvent.VK_S)) {
             CurrentSpeed.y -= 1;
-            CFSpeed = CFSpeed.mul(new CFrame(0, 0, 1));
+            CFSpeed = CFSpeed.mul(new CFrame(0, 0, Speed));
             OtherSpeed = OtherSpeed.mul(new MatrixTwoD(0,-Speed));
             // moving = true;
             // this.Position.y -= 20;
@@ -457,7 +455,6 @@ end
 
     @Override
     public void onDraw(Graphics2D g2d) {
-
         float newtime = System.nanoTime();
         float delta = newtime - oldtime;
         oldtime = newtime;
@@ -578,7 +575,7 @@ end
             g2d.setColor(Color.black);
             g2d.drawString("Player Position: X: " + Math.round(OtherPosition.getPosition().x) + " / Y: " + Math.round(OtherPosition.getPosition().y), 5, y - 5);
             g2d.drawRect(3, y - 17, 200, 15);
-        } else {
+        } else if(getScreenFactory().getGame().RenderType == Gamestates.Raytracer)  {
 
             // 3D Rendering
 
@@ -641,6 +638,13 @@ end
             g2d.setColor(Color.black);
             g2d.drawString("Player Position: " + Math.round(Origin.Position.x) + " / " + Math.round(Origin.Position.y)+ " / "+ Math.round(Origin.Position.z), 5, 412);
             g2d.drawRect(3, 400, 165, 15);
+        } else if(getScreenFactory().getGame().RenderType == Gamestates.Rasterizer) {
+
+            // Rasterizer
+            //Todo
+            // Frostumn-Culling
+
+
         }
 
         g2d.setColor(Color.white);

@@ -1,5 +1,8 @@
 package gameenginepack;
 
+import gameenginepack.DataTypes.MatrixTwoD;
+import gameenginepack.DataTypes.Vector2;
+
 public class MyGame {
 	
 	private final Game game;

@@ -1,5 +1,5 @@
 package gameenginepack;
 
 public enum Gamestates {
-    TwoD,ThreeD
+    TwoD,Raytracer,Rasterizer
 }

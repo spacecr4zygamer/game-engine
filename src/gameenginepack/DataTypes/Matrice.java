@@ -1,4 +1,4 @@
-package gameenginepack;
+package gameenginepack.DataTypes;
 
 public class Matrice {
     private final double[] Inside;

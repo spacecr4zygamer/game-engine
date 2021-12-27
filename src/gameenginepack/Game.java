@@ -1,9 +1,9 @@
 package gameenginepack;
 
 
+import gameenginepack.Services.Workspace;
+
 import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 
 import javax.swing.*;
@@ -19,6 +19,7 @@ public class Game {
     private final Mousepadlistener mouselistener;
     public final Enum RenderType;
     private JPanel Explorer;
+    private JPanel Properties;
     private final JDialog jDialog = new JDialog();
 
     public Game(int windowX, int windowY, String title, Enum VersionD) {
@@ -39,8 +40,8 @@ public class Game {
         window.setVisible(true);
 
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(null);
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new BorderLayout());
+        contentPane.setBorder(new EmptyBorder(0,0,0,0));
         window.setContentPane(contentPane);
 
         System.out.println("Window is set up");
@@ -49,19 +50,30 @@ public class Game {
         Taskscheduler taskthread = new Taskscheduler(this);
         keyboardlistener = new Keyboardlistener();
         mouselistener = new Mousepadlistener();
+        //window.addKeyListener(keyboardlistener);
+        //contentPane.addKeyListener(keyboardlistener);
+        //contentPane.addMouseListener(mouselistener);
+        window.requestFocusInWindow();
+        window.addKeyListener(keyboardlistener);
+        //window.setRequestFocusEnabled(true);
+
+        window.setFocusable(true);
+        window.setFocusTraversalKeysEnabled(false);
 
         Explorer = new JPanel();
-        //Explorer.setVisible(true);
+        Properties = new JPanel() {{
+            setPreferredSize(new Dimension(200,200));
+        }};
+        //Explorer.setVisible(true);s
         //Explorer.setSize(100,100);
 
-        //JDialog jDialog = new JDialog();
+        /*JDialog jDialog = new JDialog();
         jDialog.setTitle("Explorer");
-        //jDialog.setModal(true);
         jDialog.setFocusable(true);
         jDialog.setResizable(true);
         jDialog.setVisible(true);
         jDialog.setSize(300, 600);
-        jDialog.setLocation(1350, 220);
+        jDialog.setLocation(1350, 220);*/
 
         JButton jButton = new JButton();
         jButton.setSize(200, 200);
@@ -76,19 +88,29 @@ public class Game {
         //Explorer.setVisible(true);
 
 
-        //window.add(Explorer,BorderLayout.WEST);
+        //window.add(Explorer,BorderLayossut.WEST);
         //jDialog.add(taskthread);
         //window.add(jButton,BorderLayout.WEST);
         //contentPane.add(jButton);
         //window.add(taskthread,BorderLayout.CENTER);
-        Explorer.setBounds(windowX - 100, 0, 100, windowY);
-        Explorer.setBackground(new Color(100, 100, 100));
-        taskthread.setBounds(0, 0, windowX - 100, windowY);
-        contentPane.add(Explorer);
-        contentPane.add(taskthread);
+        //Explorer.setBounds(windowX - 100, 0, 100, windowY);
+        //Explorer.setBackground(new Color(100, 100, 100));
+
+        JButton test = new JButton("Test");
+        test.setBounds(50,50,50,50);
+        test.setFocusable(false);
+        //test.
+
+        Explorer.add(test);
+        Explorer.setPreferredSize(new Dimension(200,200));
+        Explorer.setBackground(Color.GRAY);
+        //taskthread.setBounds(0, 0, windowX - 100, windowY);
+        contentPane.add(Explorer,BorderLayout.EAST);
+        contentPane.add(taskthread,BorderLayout.CENTER);
+        //contentPane.requestFocus();
 
         //window.add(Explorer,BorderLayout.EAST);
-        window.addComponentListener(new ComponentListener() {
+        /*window.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
                 System.out.println("Please work");
@@ -111,9 +133,8 @@ public class Game {
             public void componentHidden(ComponentEvent e) {
                 //System.out.println("HMMMM");
             }
-        });
-        window.addKeyListener(keyboardlistener);
-        window.addMouseListener(mouselistener);
+        });*/
+
 
         screenFactory.showScreen(new MyScreen(screenFactory));
 

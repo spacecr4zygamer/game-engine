@@ -1,8 +1,5 @@
 package gameenginepack.Instances;
 
-import gameenginepack.ExplorerTools;
-import gameenginepack.MatrixTwoD;
-import gameenginepack.Vector2;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -23,7 +20,7 @@ public abstract class Instance {
 		switch (PropertyName) {
 			case "Archivable":
 				boolean state = false;
-				if (Property.toLowerCase() == "true") {
+				if (Property.equalsIgnoreCase("true")) {
 					state = true;
 				}
 				this.Archivable = state;
@@ -34,7 +31,9 @@ public abstract class Instance {
 		}
 	}
 
-	public String getName() { return Name; };
+	public String getName() {
+		return Name;
+	}
 
 
 	public Instance FindFirstChild(String Name) {
@@ -45,9 +44,11 @@ public abstract class Instance {
 		}
 		return null;
 	}
+
 	public void SetParent(@Nullable Instance Parent) {
 		this.Parent = Parent;
 	}
+
 	public Instance FindFirstChildOfClass(String ClassName) {
 		for (Instance child : this.Children) {
 			if (child.getClass().getSimpleName().equals(ClassName)) {
@@ -56,6 +57,7 @@ public abstract class Instance {
 		}
 		return null;
 	}
+
 	public Instance FindFirstChildWhichIsA(String Class) {
 		for (Instance child : this.Children) {
 			if (child.getClass().getName().contains(Class.subSequence(0,Class.length()))) {
@@ -65,15 +67,19 @@ public abstract class Instance {
 
 		return null;
 	}
+
 	public ArrayList<Instance> GetChildren() {
 		return this.Children;
 	}
+
 	public ArrayList<Instance> GetDescendants() {
 		return null;
 	}
+
 	public Instance GetParent() {
 		return this.Parent;
 	}
+
 	public void AddChild(Instance Child) {
 		this.Children.add(Child);
 	}

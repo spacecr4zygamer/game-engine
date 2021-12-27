@@ -1,12 +1,9 @@
 package gameenginepack.Instances;
 
-import gameenginepack.MatrixTwoD;
+import gameenginepack.DataTypes.MatrixTwoD;
 
-public class Camera2D extends Instance {
+public class Camera2D extends Camera {
 
     public MatrixTwoD CFrame = new MatrixTwoD();
-
-
-
 
 }

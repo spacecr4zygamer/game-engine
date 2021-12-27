@@ -1,4 +1,4 @@
-package gameenginepack;
+package gameenginepack.DataTypes;
 
 public class SomeMatrices {
     public double[] inside = new double[16];

@@ -13,7 +13,8 @@ public class Taskscheduler extends JPanel implements Runnable{
 		this.game = game;
 		//this.graphic = game.getWindow().getGraphics().create(0,0,800,600);
 		setFocusable(true);
-
+		//System.out.println(isDoubleBuffered());
+		//setDoubleBuffered(false);
 		//repaint();
 	}
 
@@ -52,7 +53,6 @@ public class Taskscheduler extends JPanel implements Runnable{
 		if (game.getScreenFactory().getCurrentScreen()!=null) {
 			game.getScreenFactory().getCurrentScreen().onDraw(g2d);
 		}
-		//repaint();
 		//repaint();
 	}
 	

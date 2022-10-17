@@ -52,7 +52,7 @@ public class MyGame {
 		//new Ray2D(new Vector2(0,0),new Vector2(1,0),1).cast(new Vector2(5,5),new Vector2(5,-5));
 
 
-		game = new Game(800,600, "My Game",Gamestates.TwoD);
+		game = new Game(800,600, "My Game",Gamestates.Raytracer);
 
 
 		//System.out.println(1f/2);

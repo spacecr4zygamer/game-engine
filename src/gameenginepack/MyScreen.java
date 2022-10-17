@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -451,15 +452,21 @@ end
     }
 
 
-    private float oldtime = 0;
+    private float oldtime = 0,olddelta = 0,_2olddelta = 0,_3olddelta = 0;
 
     @Override
     public void onDraw(Graphics2D g2d) {
         float newtime = System.nanoTime();
         float delta = newtime - oldtime;
         oldtime = newtime;
+
+        _3olddelta = _2olddelta;
+        _2olddelta = olddelta;
+        olddelta = delta;
+
+        float avgdelta = (olddelta+_2olddelta+_3olddelta)/3;
         //System.out.println("%.50f".formatted(newtime)+"|"+delta*0.0001);
-        float FPS = 1 / (delta * 0.000000001f);
+        float FPS = 1 / (avgdelta * 0.000000001f);
 
         if (getScreenFactory().getGame().RenderType == Gamestates.TwoD) {
 
@@ -597,6 +604,9 @@ end
 
 
             //g2d.setBackground(Color.BLACK);
+
+            BufferedImage writeImage = new BufferedImage(800,600,BufferedImage.TYPE_3BYTE_BGR);
+
             for (int x = 0; x < max_x; x++) {
                 for (int y = 0; y < max_y; y++) {
 
@@ -619,12 +629,14 @@ end
                     //System.out.println(result);
 
                     if (result >= 0) {
-                        g2d.setColor(Color.decode(Color3.Lerp(Color3.White,Color3.Black,result * 0.1).encodetoHex()));
+                        //g2d.setColor(Color.decode(Color3.Lerp(Color3.White,Color3.Black,result * 0.1).encodetoHex()));
                         //g2d.setColor(Color.blue);
-                        g2d.fillRect(x, y, 1, 1);
+                        writeImage.setRGB(x,y,Color.cyan.getRGB());
+                        //g2d.fillRect(x, y, 1, 1);
                     } else {
-                        g2d.setColor(Color.pink);
-                        g2d.fillRect(x, y, 1, 1);
+                        writeImage.setRGB(x,y,Color.pink.getRGB());
+                        //g2d.setColor(Color.pink);
+                        //g2d.fillRect(x, y, 1, 1);
                     }
                     //Pixel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)//--:Lerp(Color3.fromRGB(0, 0, 0),result/500)
                     //Pixel.BackgroundColor3 = Color3.fromRGB(44, 0, 32)
@@ -632,6 +644,8 @@ end
 
                 }
             }
+
+            g2d.drawImage(writeImage,null,0,0);
 
             g2d.setColor(Color.white);
             g2d.fillRect(3, 400, 165, 15);
